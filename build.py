@@ -9,6 +9,7 @@ Run locally:  ANTHROPIC_API_KEY=sk-... python3 build.py
 The GitHub Actions workflow runs this every morning.
 """
 import os, sys, json, datetime, urllib.request, pathlib, shutil, re
+from check_freshness import check_against_recent
 
 API_KEY = os.environ.get("ANTHROPIC_API_KEY")
 if not API_KEY:
@@ -29,6 +30,7 @@ Return ONLY a JSON object (no prose, no code fences) with exactly these keys:
   },
   "bigIdea": {"title":"short headline","lead":"...","body":"...","why":"..."},
   "continuity": {"status":"developing|quiet","note":"one plain sentence"},
+  "history": {"sector":"e.g. Spacetech","intro":"one sentence","eras":[{"yr":"yr range","title":"...","body":"..."}]},
   "trends": [ {"h":"1. ...","p":"what's happening","why":"why it matters"},
               {"h":"2. ...","p":"...","why":"..."},
               {"h":"3. ...","p":"...","why":"..."} ],
@@ -57,15 +59,28 @@ dry powder, city-wise funding split, seed-to-Series-A conversion, foreign vs dom
 LP mix, women-founder share, average round size trend) — pick whichever 2-3 are
 timeliest today. Only include "continuity" when today either follows up on an earlier
 story ("developing") or is a genuinely quiet news day being framed as progress on an
-older story ("quiet") — omit the key entirely on a normal new-story day. deck.takeaways
+older story ("quiet") — omit the key entirely on a normal new-story day. Only include
+"history" when today's deals/bigIdea clearly center on one sector (spacetech, fintech,
+AI, defence, healthtech, semiconductors, ...) — then give 4-5 eras tracing THAT
+sector's own India history instead of the template's generic default backstory; pick
+a different sector than the last 3 editions used, and omit the key entirely on a day
+with no clear sector focus. deck.takeaways
 and deck.implications are each exactly 3 short bullets; deck.summary is 2-3 plain
 sentences framed like a consulting exec summary of the day. Keep every word very simple
 and ELI5. Figures are approximate. Do not add or remove keys.
 """
+EDITORIAL_STYLE = (
+    "Write bigIdea and chartsOfTheDay like a16z's 'Charts of the Week' trend pieces, "
+    "not a stat report: name the pattern with a memorable label (not a flat "
+    "description), connect 2-3 forces into one 'why now' story instead of one "
+    "number in isolation, reframe a familiar fact non-obviously where you can, back "
+    "every claim with a concrete number, and prefer a forward-looking close over a "
+    "flat summary. "
+)
 PROMPT = ("You are writing today's 'India VC, simply' edition for a beginner. "
           "Research the most important Indian venture-capital and startup news from "
           "the last 24-72 hours with web search — including which VC firms are behind "
-          "the week's headline deals — then fill in this data. " + SCHEMA)
+          "the week's headline deals — then fill in this data. " + EDITORIAL_STYLE + SCHEMA)
 
 def load_recent_briefs(n=3):
     """Read the last n editions' data.js so the prompt can avoid repeating them."""
@@ -153,6 +168,15 @@ def validate(d):
     continuity = d.get("continuity")
     if continuity is not None and not continuity.get("note"):
         raise ValueError("continuity needs a note when present")
+    history = d.get("history")
+    if history is not None:
+        eras = history.get("eras") or []
+        if not history.get("sector"):
+            raise ValueError("history needs a sector when present")
+        if not (4 <= len(eras) <= 5):
+            raise ValueError("history.eras needs 4-5 items")
+        if any(not (e.get("yr") and e.get("title") and e.get("body")) for e in eras):
+            raise ValueError("history.eras items need yr, title, and body")
     return True
 
 def load_editions():
@@ -170,9 +194,14 @@ def save_editions(items):
     pathlib.Path("editions.js").write_text(out, encoding="utf-8")
 
 def main():
-    prompt = PROMPT + freshness_note(load_recent_briefs())
+    recent = load_recent_briefs()
+    prompt = PROMPT + freshness_note(recent)
     data = extract_json(call_claude(prompt))
     validate(data)
+    hits = check_against_recent(data, recent)
+    if hits:
+        detail = "; ".join(date + ": " + "; ".join(problems) for date, problems in hits)
+        raise ValueError("Freshness check failed — " + detail)
     today = datetime.date.today()
     date = today.isoformat()
     label = today.strftime("%-d %B %Y")

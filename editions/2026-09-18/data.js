@@ -41,6 +41,17 @@ window.BRIEF = {
     "body": "Fewer deals are happening, but the cheques are bigger and they go to proven companies. It's a two-speed market: a few strong later-stage firms raise huge rounds, while young startups face much tougher questions before anyone writes a cheque.",
     "why": "a good VC answer today isn't \"this market is huge.\" It's \"this company keeps more of every rupee it earns, and here's how it pays us back.\" Efficiency and exits beat hype."
   },
+  "history": {
+    "sector": "Spacetech",
+    "intro": "Today's biggest round was a satellite company, so here's how India's private space industry actually got here — a much shorter, stranger road than the rest of tech.",
+    "eras": [
+      { "yr": "1969 – 2013", "title": "ISRO does it alone", "body": "India built a world-class space program, but strictly as a government monopoly. No private company was allowed to build rockets, own satellites, or sell space data — space simply wasn't a startup category." },
+      { "yr": "2014 – 2019", "title": "Quiet supplier startups", "body": "A handful of small private firms started making rocket parts and ground systems for ISRO. Useful, but still just vendors to one government customer — not independent space companies." },
+      { "yr": "2020 – 2022", "title": "The sector legally opens up", "body": "India creates IN-SPACe, a new body letting private companies build and launch their own rockets and satellites for the first time ever. Skyroot and Agnikul begin building India's first private rockets." },
+      { "yr": "2023 – 2024", "title": "First private launches, first big cheques", "body": "Skyroot's Vikram-S becomes India's first privately-built rocket to fly. Satellite-data startups like Pixxel start raising serious money by selling images and insights, not just hardware." },
+      { "yr": "2025 – today", "title": "Competing globally", "body": "Indian spacetech firms now chase international customers and $100M+ rounds, competing directly with well-funded space startups in the US and Europe — not just serving India." }
+    ]
+  },
   "trends": [
     { "h": "1. Deeptech is the new favourite child", "p": "Money is pouring into hard tech — chips, satellites, defence, robots and AI built into machines. Deeptech pulled ~$365M in H1 2026, and the number of deals jumped 53%.", "why": "India wants to build its own advanced tech instead of importing it, and the government is backing that with huge funds. Slow, hard work is exactly what's hard to copy — a strong moat." },
     { "h": "2. AI is now the water, not a fish", "p": "AI stopped being its own category and became the thing running underneath everything — health, payments, logistics, security. India is the world's #2 home for generative-AI startups.", "why": "when everyone has AI, just \"using AI\" isn't special. Investors now ask what you own that others can't copy — your data, your workflow, your customers." },

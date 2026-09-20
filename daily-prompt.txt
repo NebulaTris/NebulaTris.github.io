@@ -9,11 +9,11 @@ matters" where it helps. Figures are approximate.
 
 FRESHNESS (do this FIRST):
 - Read the data.js of the 3 most recent editions/*/ folders (by date).
-- Note their bigIdea.title, every deals[].co, every trends[].h, and every
-  chartsOfTheDay[].headline (topic, not just wording).
+- Note their bigIdea.title, every deals[].co, every trends[].h, every
+  chartsOfTheDay[].headline (topic, not just wording), and every history.sector.
 - Today MUST be different: do NOT reuse the same big idea, the same deals, the same
-  trend angles, or the same chart-of-the-day topic. Prioritise genuinely NEW
-  developments from the last 24-48 hours.
+  trend angles, the same chart-of-the-day topic, or the same backstory sector.
+  Prioritise genuinely NEW developments from the last 24-48 hours.
 - If a story you covered earlier has moved forward, frame today's mention as an
   explicit update — start it with "Follow-up:" and say what is NEW vs before (a new
   number, a next step, a reaction), not a restatement. Also set continuity.status
@@ -25,6 +25,20 @@ FRESHNESS (do this FIRST):
   theme, a contrarian take) rather than manufacturing a fake new headline. Never a
   copy of a previous day.
 - Otherwise (a genuinely new story), omit continuity entirely.
+
+EDITORIAL QUALITY (bigIdea and chartsOfTheDay especially) — write like a16z's
+"Charts of the Week" / trend pieces, not a stat report:
+- Name the pattern. Give bigIdea.title (and each chartsOfTheDay.headline) a
+  memorable label for the phenomenon, not a flat description. "Funding fell 15%"
+  is a stat; "The money got picky" is a named pattern.
+- Connect 2-3 forces into one "why now" story instead of reporting one number in
+  isolation — e.g. (economic pressure) + (a behavior shift) + (a new enabler)
+  converging is more compelling than any one alone.
+- Reframe something familiar non-obviously where you can: show how a fact people
+  already know (rising costs, a slow quarter) is actually causing or enabling the
+  real story, not just background noise.
+- Back every claim with a concrete number from your research — never vibes.
+- Prefer a forward-looking close (what this sets up next) over a flat summary.
 
 Then build the edition:
 1. Web-search the most important Indian VC / startup news from the last 24-48 hours.
@@ -39,6 +53,15 @@ Then build the edition:
    - charts.gov: {labels, values (rupees crore), cap} — keep real scheme sizes
      unless news changes them.
    - bigIdea: {title, lead, body, why}   (a fresh angle vs recent editions)
+   - history: {sector, intro, eras:[4-5 x {yr,title,body}]} — OPTIONAL. When today's
+     deals/bigIdea clearly center on one sector (spacetech, fintech, AI, defence,
+     healthtech, semiconductors, ...), replace the generic "how India's startup
+     scene got here" backstory with that SECTOR's own India history instead: 4-5
+     eras (yr range, short title, one ELI5 paragraph) tracing how that specific
+     sector got to today in India. Pick a DIFFERENT sector than the last 3
+     editions' history.sector (see FRESHNESS). OMIT this key entirely on a day
+     with no clear sector focus — the template falls back to the fixed general
+     timeline automatically.
    - continuity: {status:"developing"|"quiet", note} — OMIT this key entirely on a
      genuinely new-story day; only include it per the FRESHNESS rules above.
    - trends: 3 x {h,p,why}               (not repeats of recent editions)
@@ -55,14 +78,21 @@ Then build the edition:
      as the last 3 editions (see FRESHNESS).
    - deck: {summary, takeaways[3], implications[3]}
    - sources: 5-8 x {t,s,url}  (real, working, recent URLs)
-4. Copy edition-template.html to editions/TODAY/index.html, replacing __OGURL__ with
+4. Run: python3 check_freshness.py TODAY — a HARD, mechanical check (not just the
+   FRESHNESS instructions above) against the last 3 editions' bigIdea.title,
+   deals[], trends[], chartsOfTheDay[] headlines, and history.sector. If it exits
+   non-zero, fix editions/TODAY/data.js per what it flags and rerun until it passes
+   — do not proceed to publishing on a failure.
+5. Copy edition-template.html to editions/TODAY/index.html, replacing __OGURL__ with
    https://nebulatris.github.io/editions/TODAY/ and __OGIMAGE__ with that URL +
    poster.png.
-5. Prepend {date:TODAY,label:LABEL,url:"editions/TODAY/",headline:<bigIdea.title>}
+6. Prepend {date:TODAY,label:LABEL,url:"editions/TODAY/",headline:<bigIdea.title>}
    to window.EDITIONS in editions.js.
-6. Run: python3 poster.py TODAY
-7. node --check the inline JS of editions/TODAY/index.html.
-8. Write editions/TODAY/tweet.txt (gitignored): an X caption under 280 chars —
+7. Run: python3 poster.py TODAY
+   Run: python3 cotd_poster.py TODAY  (renders cotd-1.png, cotd-2.png, ... — one
+   shareable poster PNG per chartsOfTheDay item; no-ops safely if that key is empty)
+8. node --check the inline JS of editions/TODAY/index.html.
+9. Write editions/TODAY/tweet.txt (gitignored): an X caption under 280 chars —
    headline + one-line lead + edition URL + 2-3 hashtags. Print it.
-9. Commit all changes with message "Edition: TODAY" (real date) and push to main.
-   Print the commit hash and https://nebulatris.github.io/editions/TODAY/.
+10. Commit all changes with message "Edition: TODAY" (real date) and push to main.
+    Print the commit hash and https://nebulatris.github.io/editions/TODAY/.

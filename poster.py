@@ -13,6 +13,7 @@ lives in poster.html; only data changes."""
 import sys, io, datetime, pathlib
 from playwright.sync_api import sync_playwright
 from PIL import Image
+from poster_gif import save_gif
 
 date = sys.argv[1] if len(sys.argv) > 1 else datetime.date.today().isoformat()
 folder = pathlib.Path("editions") / date
@@ -58,12 +59,7 @@ with sync_playwright() as p:
     pg.close()
     b.close()
 
-# Share one adaptive palette across all frames so colors stay stable (no flicker),
-# then let Pillow's GIF encoder diff frames for a smaller file.
-base = frames[0].convert("P", palette=Image.Palette.ADAPTIVE, colors=256)
-paletted = [base] + [f.quantize(palette=base) for f in frames[1:]]
-paletted[0].save(str(folder / "poster.gif"), save_all=True, append_images=paletted[1:],
-                  duration=GIF_STEP_MS, loop=0, optimize=True)
+save_gif(frames, folder / "poster.gif", GIF_STEP_MS)
 
 tmp.unlink(missing_ok=True)
 print("Wrote", folder / "poster.png")

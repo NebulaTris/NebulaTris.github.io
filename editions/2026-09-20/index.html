@@ -6,6 +6,9 @@
 <title>India VC, Explained Simply</title>
 <meta name="description" content="A daily, plain-English guide to Indian venture capital — the money, the history, the government's bets, and the frontier. Interactive charts and a beginner's glossary.">
 <link rel="canonical" href="https://nebulatris.github.io/">
+<link rel="icon" type="image/png" href="../../favicon.png">
+<link rel="icon" type="image/x-icon" href="../../favicon.ico">
+<link rel="apple-touch-icon" href="../../apple-touch-icon.png">
 <meta property="og:type" content="website">
 <meta property="og:title" content="India VC, Explained Simply">
 <meta property="og:description" content="Where India's startup money is going, and the simple reasons why — refreshed daily, with interactive charts.">
@@ -280,15 +283,9 @@
 
   <section id="history">
     <p class="eyebrow">The backstory</p>
-    <h2>How India got here</h2>
-    <p class="lead">To see where the money is going, it helps to see the road behind it. India's startup story came in waves — each teaching a lesson the next built on.</p>
-    <div class="timeline">
-      <div class="era"><div class="yr">1990s – 2000s</div><h3>The "back office of the world"</h3><p>India got famous selling software services — Infosys, TCS, Wipro doing work for foreign firms. Brilliant engineers, but selling time, not products. This built the talent, not yet the startups.</p></div>
-      <div class="era"><div class="yr">2008 – 2020</div><h3>The consumer internet boom</h3><p>After the 2008 crash, VCs poured money into apps for Indian shoppers and riders — Flipkart, Ola, Myntra. Starting up stopped being taboo. This is where "grow fast, lose money, worry later" was born.</p></div>
-      <div class="era"><div class="yr">2015 – 2021</div><h3>UPI, SaaS and the edtech bubble</h3><p>UPI made payments almost free, so fintech exploded. SaaS firms sold to the world. COVID pumped huge money into edtech — a bubble about to pop.</p></div>
-      <div class="era"><div class="yr">2022 – 2023</div><h3>The funding winter</h3><p>Global money got expensive, investment dried up, and poster-child Byju's collapsed. Valuations were slashed. A hard reminder that a business must actually make money.</p></div>
-      <div class="era"><div class="yr">2024 – today</div><h3>The deeptech turn</h3><p>Money now moves to hard tech — chips, space, defence, AI, medical devices — and to disciplined, profitable firms. India crossed 2 lakh startups and 132 unicorns, and founders build "from India, for the world."</p></div>
-    </div>
+    <h2 id="history-h2">How India got here</h2>
+    <p class="lead" id="history-lead"></p>
+    <div class="timeline" id="timeline"></div>
   </section>
 
   <section id="gov">
@@ -471,7 +468,7 @@
 
   <footer>
     <p><b>India VC, simply</b> — a daily learning project, not investment advice. Figures are from public reporting and are approximate; verify before quoting.</p>
-    <p>New edition published daily, automatically. Built with Claude.</p>
+    <p>New edition published daily, automatically.</p>
   </footer>
 </div>
 
@@ -525,6 +522,34 @@ if(B.bigIdea){document.getElementById('bi-title').textContent=B.bigIdea.title||'
 (B.trends||[]).forEach(function(t){var d=el('div','trend');d.appendChild(el('h3',null,t.h));d.appendChild(el('p',null,t.p));
   var w=el('div','why');var b=el('b',null,'Why it matters: ');w.appendChild(b);w.appendChild(document.createTextNode(t.why||''));d.appendChild(w);
   document.getElementById('trendlist').appendChild(d);});
+
+/* backstory: a sector-specific history if today's edition supplies one, else
+   this fixed general India-VC timeline (kept here, not as static HTML, so both
+   paths render through the same code). */
+var DEFAULT_HISTORY={
+  sector:null,
+  intro:"To see where the money is going, it helps to see the road behind it. India's startup story came in waves — each teaching a lesson the next built on.",
+  eras:[
+    {yr:"1990s – 2000s",title:"The \"back office of the world\"",body:"India got famous selling software services — Infosys, TCS, Wipro doing work for foreign firms. Brilliant engineers, but selling time, not products. This built the talent, not yet the startups."},
+    {yr:"2008 – 2020",title:"The consumer internet boom",body:"After the 2008 crash, VCs poured money into apps for Indian shoppers and riders — Flipkart, Ola, Myntra. Starting up stopped being taboo. This is where \"grow fast, lose money, worry later\" was born."},
+    {yr:"2015 – 2021",title:"UPI, SaaS and the edtech bubble",body:"UPI made payments almost free, so fintech exploded. SaaS firms sold to the world. COVID pumped huge money into edtech — a bubble about to pop."},
+    {yr:"2022 – 2023",title:"The funding winter",body:"Global money got expensive, investment dried up, and poster-child Byju's collapsed. Valuations were slashed. A hard reminder that a business must actually make money."},
+    {yr:"2024 – today",title:"The deeptech turn",body:"Money now moves to hard tech — chips, space, defence, AI, medical devices — and to disciplined, profitable firms. India crossed 2 lakh startups and 132 unicorns, and founders build \"from India, for the world.\""}
+  ]
+};
+(function(){
+  var hist=(B.history&&B.history.eras&&B.history.eras.length)?B.history:DEFAULT_HISTORY;
+  if(hist.sector)document.getElementById('history-h2').textContent="How India's "+hist.sector+" story got here";
+  document.getElementById('history-lead').textContent=hist.intro||DEFAULT_HISTORY.intro;
+  var timeline=document.getElementById('timeline');
+  hist.eras.forEach(function(e){
+    var era=el('div','era');
+    era.appendChild(el('div','yr',e.yr));
+    era.appendChild(el('h3',null,e.title));
+    era.appendChild(el('p',null,e.body));
+    timeline.appendChild(era);
+  });
+})();
 
 (B.deals||[]).forEach(function(x){var d=el('div','deal');
   var a=el('div','amt',x.amt);a.appendChild(el('span',null,x.sub||''));d.appendChild(a);

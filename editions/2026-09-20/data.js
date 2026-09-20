@@ -45,6 +45,17 @@ window.BRIEF = {
     "status": "developing",
     "note": "Following up on 18 September's \"the money got picky\": this week confirmed it wasn't a blip — weekly VC inflow fell further, from $291M to just $62M."
   },
+  "history": {
+    "sector": "AI",
+    "intro": "This week's biggest round and a brand-new dedicated fund were both AI bets, so here's how \"AI startup\" went from buzzword to India's most crowded category.",
+    "eras": [
+      { "yr": "2015 – 2019", "title": "AI as a buzzword", "body": "Plenty of Indian startups called themselves \"AI companies,\" but most were really just regular software with an AI label stuck on for pitch decks. Genuinely useful AI products were rare." },
+      { "yr": "2020 – 2022", "title": "SaaS gets a real brain", "body": "Indian SaaS companies selling to the world started embedding actual machine learning into their products — fraud detection, recommendations, forecasting — not just marketing copy." },
+      { "yr": "2023", "title": "ChatGPT changes the conversation", "body": "Generative AI's global breakout triggers a rush of Indian founders and investors racing to build \"AI-native\" products from scratch, not bolt AI onto old ones." },
+      { "yr": "2024 – 2025", "title": "India becomes AI startup country #2", "body": "India becomes the world's second-largest home for generative-AI startups, backed by both global funds and new homegrown ones betting specifically on this wave." },
+      { "yr": "2026 – today", "title": "Specialist funds and celebrity money arrive", "body": "Dedicated AI-only VC funds launch specifically to back this category, and even celebrities start co-investing directly in Indian AI products alongside professional investors." }
+    ]
+  },
   "trends": [
     { "h": "1. Specialist AI funds are stacking up cash", "p": "Activate, founded by Haptik's former CEO, closed its first fund at $105M — purely to back AI-native startups from idea stage — 125% above its own target, backed by Vinod Khosla and General Catalyst among others.", "why": "when a fund raises money just for one sector, it means faster, more confident cheques for founders in that sector, and signals big-name investors expect that sector to keep growing." },
     { "h": "2. Celebrities are becoming real co-investors, not just faces", "p": "Flam, an AI interactive-content startup, raised $40M in Series B — this week's biggest round — with QED Investors leading, joined by actor Shah Rukh Khan alongside its existing backers.", "why": "celebrity money chasing consumer-facing AI products blends fandom with genuine bets — it can bring distribution and trust fast, but it's not the same as institutional diligence." },
