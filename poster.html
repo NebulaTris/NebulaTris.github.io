@@ -63,9 +63,11 @@
     var l=document.createElement('div');l.className='l';l.textContent=s.l;d.appendChild(n);d.appendChild(l);
     document.getElementById('stats').appendChild(d);});
   var rot=(B.charts&&B.charts.rotation)||{labels:[],values:[]};
-  var mx=Math.max.apply(null,(rot.values.length?rot.values:[1]));
-  rot.labels.forEach(function(lab,i){
-    var v=rot.values[i];var row=document.createElement('div');row.className='row';
+  if(!rot.labels)rot=rot.annual||rot.quarterly||rot.monthly||{labels:[],values:[]};
+  var pairs=(rot.labels||[]).map(function(l,i){return[l,rot.values[i]];}).sort(function(a,b){return b[1]-a[1];}).slice(0,4);
+  var mx=Math.max.apply(null,(pairs.length?pairs.map(function(p){return p[1];}):[1]));
+  pairs.forEach(function(p){
+    var lab=p[0],v=p[1];var row=document.createElement('div');row.className='row';
     var rl=document.createElement('div');rl.className='rl';rl.textContent=lab;
     var tr=document.createElement('div');tr.className='track';
     var f=document.createElement('div');f.className='fill';

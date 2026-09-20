@@ -17,7 +17,7 @@ tmp.write_text(html, encoding="utf-8")
 with sync_playwright() as p:
     b = p.chromium.launch(args=["--no-sandbox"])
     pg = b.new_page(viewport={"width": 1080, "height": 1350}, device_scale_factor=2)
-    pg.goto(tmp.as_uri())
+    pg.goto(tmp.resolve().as_uri())
     pg.wait_for_timeout(800)  # let the embedded font settle
     pg.screenshot(path=str(folder / "poster.png"),
                   clip={"x": 0, "y": 0, "width": 1080, "height": 1350})

@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>India VC, Explained Simply</title>
+<meta name="description" content="A daily, plain-English guide to Indian venture capital — the money, the history, the government's bets, and the frontier. Interactive charts and a beginner's glossary.">
+<link rel="canonical" href="https://nebulatris.github.io/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="India VC, Explained Simply">
+<meta property="og:description" content="Where India's startup money is going, and the simple reasons why — refreshed daily, with interactive charts.">
+<meta property="og:url" content="https://nebulatris.github.io/editions/2026-09-20/">
+<meta property="og:image" content="https://nebulatris.github.io/editions/2026-09-20/poster.png">
+<meta name="twitter:image" content="https://nebulatris.github.io/editions/2026-09-20/poster.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.5.0/chart.umd.min.js"></script>
+<style>
+  :root{--paper:#F4F6F5;--card:#FBFCFB;--ink:#1B2A26;--ink-soft:#4C5D57;--ink-faint:#8A978F;
+    --line:#DDE4E0;--up:#12795A;--up-soft:#E4F0EA;--caution:#B4472C;--caution-soft:#F5E7E1;--accent:#12795A;}
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+    --paper:#121613;--card:#191F1B;--ink:#EAF0EC;--ink-soft:#AEBDB6;--ink-faint:#71827A;
+    --line:#28322D;--up:#4FBF97;--up-soft:#183028;--caution:#E08668;--caution-soft:#31221B;--accent:#4FBF97;}}
+  :root[data-theme="dark"]{--paper:#121613;--card:#191F1B;--ink:#EAF0EC;--ink-soft:#AEBDB6;--ink-faint:#71827A;
+    --line:#28322D;--up:#4FBF97;--up-soft:#183028;--caution:#E08668;--caution-soft:#31221B;--accent:#4FBF97;}
+  *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);
+    font-family:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.6;font-size:17px;}
+  .wrap{max-width:820px;margin:0 auto;padding:0 22px;}
+  a{color:var(--accent);}
+
+  #progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--accent);z-index:100;}
+
+  .site-header{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--paper) 88%,transparent);
+    backdrop-filter:blur(8px);border-bottom:1px solid var(--line);}
+  .site-header .wrap{display:flex;align-items:center;gap:16px;padding:13px 22px;}
+  .brand{font-family:"Fraunces",serif;font-weight:600;font-size:18px;letter-spacing:-.01em;white-space:nowrap;}
+  nav.top{display:flex;gap:16px;margin-left:auto;}
+  nav.top a{color:var(--ink-soft);text-decoration:none;font-size:14px;font-weight:500;}
+  nav.top a:hover,nav.top a.active{color:var(--accent);}
+  .counter{display:inline-flex;align-items:center;gap:7px;background:var(--card);border:1px solid var(--line);
+    border-radius:999px;padding:5px 12px;font-size:13px;color:var(--ink-soft);font-variant-numeric:tabular-nums;white-space:nowrap;}
+  .counter .dot{width:7px;height:7px;border-radius:50%;background:var(--up);box-shadow:0 0 0 3px var(--up-soft);}
+  .counter b{color:var(--ink);font-weight:600;}
+  @media(max-width:720px){nav.top{display:none;} .counter{margin-left:auto;}}
+
+  header.hero{padding:54px 0 32px;}
+  .edition{font-size:13.5px;color:var(--ink-faint);}
+  h1{font-family:"Fraunces",serif;font-weight:600;font-size:clamp(40px,7.5vw,64px);line-height:1.02;letter-spacing:-.025em;margin:14px 0 0;}
+  .sub{font-family:"Fraunces",serif;font-weight:400;font-size:clamp(19px,3vw,24px);color:var(--ink-soft);margin:16px 0 0;max-width:56ch;line-height:1.4;}
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--card);margin:30px 0 0;}
+  .stat{padding:20px;border-right:1px solid var(--line);}
+  .stat:last-child{border-right:none;}
+  .stat .n{font-family:"Fraunces",serif;font-weight:600;font-size:30px;line-height:1;color:var(--accent);}
+  .stat .l{font-size:13.5px;color:var(--ink-soft);margin-top:8px;line-height:1.35;}
+  @media(max-width:560px){.stats{grid-template-columns:1fr;}.stat{border-right:none;border-bottom:1px solid var(--line);}.stat:last-child{border-bottom:none;}}
+
+  section{padding:44px 0;border-top:1px solid var(--line);margin-top:44px;scroll-margin-top:70px;}
+  .eyebrow{font-size:13px;font-weight:600;color:var(--accent);margin:0 0 10px;}
+  h2{font-family:"Fraunces",serif;font-weight:600;font-size:clamp(25px,4vw,32px);letter-spacing:-.015em;margin:0 0 14px;line-height:1.12;}
+  p{margin:0 0 14px;} p.lead{font-size:18.5px;}
+  .why{background:var(--up-soft);border-radius:10px;padding:13px 16px;font-size:15.5px;margin:6px 0 0;}
+  .why b{color:var(--accent);}
+
+  .chartcard{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;margin-top:8px;}
+  .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;}
+  .tab{appearance:none;border:1px solid var(--line);background:transparent;color:var(--ink-soft);border-radius:999px;padding:8px 15px;font:inherit;font-size:14px;font-weight:500;cursor:pointer;transition:.15s;}
+  .tab:hover{border-color:var(--accent);color:var(--ink);}
+  .tab[aria-selected="true"]{background:var(--accent);border-color:var(--accent);color:#fff;}
+  .chart-holder{position:relative;height:340px;}
+  @media(max-width:560px){.chart-holder{height:300px;}}
+  .chart-cap{font-size:13.5px;color:var(--ink-faint);margin-top:12px;}
+
+  .seg{display:none;gap:6px;margin:-4px 0 14px;flex-wrap:wrap;}
+  .segbtn{appearance:none;border:1px solid var(--line);background:transparent;color:var(--ink-soft);border-radius:999px;
+    padding:5px 12px;font:inherit;font-size:12.5px;font-weight:500;cursor:pointer;transition:.15s;}
+  .segbtn:hover{border-color:var(--accent);color:var(--ink);}
+  .segbtn[aria-selected="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper);}
+
+  .trend{padding:20px 0;border-top:1px dashed var(--line);}
+  .trend:first-of-type{border-top:none;padding-top:2px;}
+  .trend h3{font-family:"Fraunces",serif;font-weight:600;font-size:20px;margin:0 0 6px;letter-spacing:-.01em;}
+  .trend p{margin:0 0 8px;color:var(--ink-soft);}
+
+  .deckwrap{margin-top:8px;}
+  .deckview{position:relative;background:var(--card);border:1px solid var(--line);border-radius:16px;aspect-ratio:16/10;
+    padding:32px 34px;overflow:auto;outline:none;}
+  @media(max-width:560px){.deckview{aspect-ratio:4/5;padding:24px 22px;}}
+  .slide{display:none;}
+  .slide.active{display:block;animation:slidein .35s ease;}
+  @keyframes slidein{from{opacity:0;transform:translateX(10px);}to{opacity:1;transform:none;}}
+  .slide .stag{font-size:12px;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:.05em;margin:0 0 10px;}
+  .slide h3{font-family:"Fraunces",serif;font-weight:600;font-size:clamp(20px,3vw,26px);margin:0 0 12px;letter-spacing:-.01em;}
+  .slide ul{margin:0 0 4px;padding-left:20px;}
+  .slide li{margin:0 0 8px;font-size:15.5px;color:var(--ink-soft);}
+  .slide .ministats{display:flex;gap:12px;flex-wrap:wrap;margin-top:16px;}
+  .slide .ministat{background:var(--up-soft);border-radius:10px;padding:10px 14px;}
+  .slide .ministat .n{font-family:"Fraunces",serif;font-weight:600;color:var(--accent);font-size:19px;line-height:1;}
+  .slide .ministat .l{font-size:11.5px;color:var(--ink-soft);margin-top:4px;max-width:16ch;}
+  .slide .rank{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-top:1px dashed var(--line);font-size:15px;}
+  .slide .rank:first-of-type{border-top:none;}
+  .slide .rank b{font-weight:600;}
+  .slide .rank span:last-child{color:var(--ink-faint);}
+  .deckctl{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:14px;}
+  .deckbtn{appearance:none;border:1px solid var(--line);background:var(--card);color:var(--ink);width:34px;height:34px;
+    border-radius:50%;cursor:pointer;font-size:15px;line-height:1;}
+  .deckbtn:hover{border-color:var(--accent);color:var(--accent);}
+  .deckdots{display:flex;align-items:center;gap:7px;}
+  .deckdot{width:7px;height:7px;border-radius:50%;background:var(--line);cursor:pointer;border:none;padding:0;}
+  .deckdot[aria-selected="true"]{background:var(--accent);width:18px;border-radius:5px;transition:.2s;}
+
+  .timeline{position:relative;padding-left:26px;margin-top:8px;}
+  .timeline::before{content:"";position:absolute;left:7px;top:6px;bottom:6px;width:2px;background:var(--line);}
+  .era{position:relative;padding:0 0 24px;opacity:0;transform:translateY(12px);transition:opacity .6s ease,transform .6s ease;}
+  .era.in{opacity:1;transform:none;}
+  .era:last-child{padding-bottom:0;}
+  .era::before{content:"";position:absolute;left:-23px;top:5px;width:12px;height:12px;border-radius:50%;background:var(--accent);border:2px solid var(--card);box-shadow:0 0 0 2px var(--accent);}
+  .era .yr{font-family:"Fraunces",serif;font-weight:600;font-size:15px;color:var(--accent);}
+  .era h3{font-family:"Fraunces",serif;font-weight:600;font-size:18px;margin:2px 0 5px;letter-spacing:-.01em;}
+  .era p{margin:0;font-size:15px;color:var(--ink-soft);}
+  @media (prefers-reduced-motion: reduce){.era{opacity:1;transform:none;transition:none;}}
+
+  .gov-row{display:grid;grid-template-columns:150px 1fr;gap:16px;padding:16px 0;border-top:1px solid var(--line);}
+  .gov-row:first-of-type{border-top:none;}
+  .gov-row .amt{font-family:"Fraunces",serif;font-weight:600;font-size:22px;color:var(--accent);line-height:1.1;}
+  .gov-row .amt span{display:block;font-size:12px;color:var(--ink-faint);font-family:"Inter",sans-serif;font-weight:400;margin-top:4px;}
+  .gov-row .nm{font-weight:600;font-size:16px;}
+  .gov-row .ds{font-size:14.5px;color:var(--ink-soft);margin-top:3px;}
+  @media(max-width:560px){.gov-row{grid-template-columns:1fr;gap:5px;}}
+
+  .deal{display:grid;grid-template-columns:96px 1fr;gap:16px;padding:15px 0;border-top:1px solid var(--line);}
+  .deal:first-of-type{border-top:none;}
+  .deal .amt{font-family:"Fraunces",serif;font-weight:600;font-size:19px;color:var(--accent);}
+  .deal .amt span{display:block;font-size:12px;color:var(--ink-faint);font-weight:400;margin-top:3px;font-family:"Inter",sans-serif;}
+  .deal .co{font-weight:600;font-size:16px;}
+  .deal .co small{font-weight:400;color:var(--ink-soft);font-size:14.5px;}
+  .deal .d{font-size:14.5px;color:var(--ink-soft);margin-top:3px;}
+
+  .investor{display:flex;flex-wrap:wrap;align-items:baseline;gap:7px 10px;padding:14px 0;border-top:1px solid var(--line);}
+  .investor:first-of-type{border-top:none;}
+  .investor .firm{font-weight:600;font-size:16px;}
+  .investor .cc{font-size:12px;font-weight:600;color:var(--accent);background:var(--up-soft);border-radius:999px;padding:3px 10px;}
+  .investor .meta{width:100%;font-size:14.5px;color:var(--ink-soft);}
+  .barlist{margin-top:10px;}
+  .barrow{display:grid;grid-template-columns:100px 1fr 26px;align-items:center;gap:10px;padding:6px 0;font-size:13.5px;}
+  .barrow .ct{color:var(--ink-soft);}
+  .barrow .track{background:var(--line);border-radius:6px;height:9px;overflow:hidden;}
+  .barrow .fill{background:var(--accent);height:100%;border-radius:6px;}
+  .barrow .n{text-align:right;color:var(--ink-faint);font-size:13px;}
+  @media(max-width:560px){.barrow{grid-template-columns:80px 1fr 22px;}}
+
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:8px;}
+  @media(max-width:640px){.grid{grid-template-columns:1fr;}}
+  .fcard{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px;transition:transform .15s ease,border-color .15s ease;}
+  .fcard:hover{transform:translateY(-3px);border-color:var(--accent);}
+  .fcard h3{font-family:"Fraunces",serif;font-weight:600;font-size:19px;margin:0 0 6px;letter-spacing:-.01em;}
+  .fcard p{font-size:15px;color:var(--ink-soft);margin:0 0 10px;}
+  .fcard .moat{border-left:3px solid var(--accent);padding-left:12px;font-size:14px;color:var(--ink-soft);}
+  .fcard .moat b{color:var(--ink);}
+
+  .read a{display:block;text-decoration:none;padding:14px 0;border-top:1px solid var(--line);color:inherit;}
+  .read a:first-of-type{border-top:none;}
+  .read .t{font-weight:600;font-size:16px;}
+  .read .s{font-size:13.5px;color:var(--ink-faint);margin-top:2px;}
+  .read a:hover .t{color:var(--accent);}
+
+  .term-h{font-size:12px;font-weight:600;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.05em;margin:22px 0 4px;}
+  .term-h:first-child{margin-top:4px;}
+  details.term{border-top:1px solid var(--line);padding:4px 0;}
+  details.term:first-of-type{border-top:none;}
+  details.term summary{cursor:pointer;list-style:none;padding:12px 0;font-weight:600;font-size:16px;display:flex;justify-content:space-between;align-items:center;}
+  details.term summary::-webkit-details-marker{display:none;}
+  details.term summary::after{content:"+";color:var(--accent);font-size:20px;font-weight:400;transition:transform .2s;}
+  details.term[open] summary::after{transform:rotate(45deg);}
+  details.term p{margin:0 0 14px;color:var(--ink-soft);font-size:15px;}
+
+  footer{padding:40px 0 66px;color:var(--ink-faint);font-size:13.5px;line-height:1.6;border-top:1px solid var(--line);margin-top:44px;}
+  footer b{color:var(--ink-soft);}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+
+<div class="site-header"><div class="wrap">
+  <a class="brand" href="../../" style="text-decoration:none;color:inherit;">India VC, simply</a>
+  <nav class="top">
+    <a href="../../">← All editions</a>
+    <a href="#money">Money</a>
+    <a href="#deck">Deck</a>
+    <a href="#trends">Trends</a>
+    <a href="#history">History</a>
+    <a href="#investors">Backers</a>
+    <a href="#frontier">Frontier</a>
+    <a href="#words">Words</a>
+  </nav>
+  <span class="counter"><span class="dot"></span><b id="viewcount">…</b>&nbsp;views</span>
+</div></div>
+
+<div class="wrap">
+
+  <header class="hero">
+    <div class="edition">Daily briefing · <span id="today"></span></div>
+    <h1>Indian VC, explained simply.</h1>
+    <p class="sub">Where India's startup money is going, the road that got us here, and the simple reasons why — refreshed every day.</p>
+    <div class="stats" id="stats"></div>
+  </header>
+
+  <section id="money" style="border-top:none;margin-top:8px;padding-top:8px;">
+    <p class="eyebrow">The money, in three pictures</p>
+    <h2>Follow the money</h2>
+    <p>Tap a tab to switch views. Hover or tap any bar for the exact number.</p>
+    <div class="chartcard">
+      <div class="tabs" role="tablist">
+        <button class="tab" role="tab" aria-selected="true" data-view="weekly">Weekly inflow</button>
+        <button class="tab" role="tab" aria-selected="false" data-view="rotation">Sector rotation</button>
+        <button class="tab" role="tab" aria-selected="false" data-view="gov">Government money</button>
+      </div>
+      <div class="seg" id="rotToggle" role="tablist" aria-label="Rotation time window">
+        <button class="segbtn" data-win="monthly" aria-selected="false">Monthly</button>
+        <button class="segbtn" data-win="quarterly" aria-selected="false">Quarterly</button>
+        <button class="segbtn" data-win="annual" aria-selected="true">Annually</button>
+      </div>
+      <div class="chart-holder"><canvas id="chart"></canvas></div>
+      <p class="chart-cap" id="chartcap"></p>
+    </div>
+  </section>
+
+  <section id="idea">
+    <p class="eyebrow">Today's big idea</p>
+    <h2 id="bi-title"></h2>
+    <p class="lead" id="bi-lead"></p>
+    <p id="bi-body"></p>
+    <div class="why"><b>Why it matters:</b> <span id="bi-why"></span></div>
+  </section>
+
+  <section id="deck">
+    <p class="eyebrow">The 60-second version</p>
+    <h2>Briefing deck</h2>
+    <p>Swipe, tap the arrows, or use ← → — a consulting-style summary of today's edition.</p>
+    <div class="deckwrap">
+      <div class="deckview" id="deckview" tabindex="0"></div>
+      <div class="deckctl">
+        <button class="deckbtn" id="deckprev" aria-label="Previous slide" type="button">←</button>
+        <div class="deckdots" id="deckdots"></div>
+        <button class="deckbtn" id="decknext" aria-label="Next slide" type="button">→</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="trends">
+    <p class="eyebrow">Three trends worth knowing</p>
+    <h2>What's changing right now</h2>
+    <div id="trendlist"></div>
+  </section>
+
+  <section id="history">
+    <p class="eyebrow">The backstory</p>
+    <h2>How India got here</h2>
+    <p class="lead">To see where the money is going, it helps to see the road behind it. India's startup story came in waves — each teaching a lesson the next built on.</p>
+    <div class="timeline">
+      <div class="era"><div class="yr">1990s – 2000s</div><h3>The "back office of the world"</h3><p>India got famous selling software services — Infosys, TCS, Wipro doing work for foreign firms. Brilliant engineers, but selling time, not products. This built the talent, not yet the startups.</p></div>
+      <div class="era"><div class="yr">2008 – 2020</div><h3>The consumer internet boom</h3><p>After the 2008 crash, VCs poured money into apps for Indian shoppers and riders — Flipkart, Ola, Myntra. Starting up stopped being taboo. This is where "grow fast, lose money, worry later" was born.</p></div>
+      <div class="era"><div class="yr">2015 – 2021</div><h3>UPI, SaaS and the edtech bubble</h3><p>UPI made payments almost free, so fintech exploded. SaaS firms sold to the world. COVID pumped huge money into edtech — a bubble about to pop.</p></div>
+      <div class="era"><div class="yr">2022 – 2023</div><h3>The funding winter</h3><p>Global money got expensive, investment dried up, and poster-child Byju's collapsed. Valuations were slashed. A hard reminder that a business must actually make money.</p></div>
+      <div class="era"><div class="yr">2024 – today</div><h3>The deeptech turn</h3><p>Money now moves to hard tech — chips, space, defence, AI, medical devices — and to disciplined, profitable firms. India crossed 2 lakh startups and 132 unicorns, and founders build "from India, for the world."</p></div>
+    </div>
+  </section>
+
+  <section id="gov">
+    <p class="eyebrow">Why the shift is happening</p>
+    <h2>The government put real money down</h2>
+    <p>A big reason the money turned toward deeptech isn't fashion — the government started acting like a huge, patient investor, lowering risk so private VCs follow. What it committed:</p>
+    <div class="gov-row"><div class="amt">₹1 lakh cr<span>~$12B · 2025</span></div><div><div class="nm">RDI Scheme (Research, Development &amp; Innovation)</div><div class="ds">The biggest R&amp;D push in India's history. Cheap, long-term money for slow, hard science — AI, chips, space, biotech. Includes a Deep-Tech Fund of Funds.</div></div></div>
+    <div class="gov-row"><div class="amt">₹76,000 cr<span>Semiconductor Mission</span></div><div><div class="nm">India Semiconductor Mission</div><div class="ds">Money to build chip plants and design in India, so the country stops importing almost all its chips. Total project investments already cross ₹1.6 lakh crore.</div></div></div>
+    <div class="gov-row"><div class="amt">₹10,372 cr<span>IndiaAI Mission</span></div><div><div class="nm">IndiaAI Mission</div><div class="ds">National AI "compute" (thousands of GPUs), Indian AI models, and funding for AI startups — so India isn't dependent on foreign AI infrastructure.</div></div></div>
+    <div class="gov-row"><div class="amt">₹10,000 cr<span>Fund of Funds 1.0</span></div><div><div class="nm">Startup India Fund of Funds</div><div class="ds">The government didn't pick startups — it fed 145 VC funds, which then invested over ₹25,500 crore into 1,370+ startups. This is how it "crowds in" private money.</div></div></div>
+    <div class="gov-row"><div class="amt">₹10,000 cr<span>Fund of Funds 2.0 · 2025</span></div><div><div class="nm">Startup India Fund of Funds 2.0</div><div class="ds">A fresh round, pointed straight at deeptech, tech-driven manufacturing, and early-growth startups.</div></div></div>
+    <div class="why"><b>Why this matters (simply):</b> deeptech takes 8–10 years and lots of cash — too scary for a normal VC alone. So the government acts like a patient anchor investor: it feeds VC funds and offers cheap loans for hard tech. That lowers everyone's risk and pulls private money in behind it.</div>
+  </section>
+
+  <section id="deals">
+    <p class="eyebrow">Deals that tell the story</p>
+    <h2>Recent headline rounds</h2>
+    <div id="deallist"></div>
+  </section>
+
+  <section id="investors">
+    <p class="eyebrow">Who wrote the cheques</p>
+    <h2>The investors this week</h2>
+    <div id="investorlist"></div>
+    <p class="chart-cap" style="margin-top:20px;">Backers by country</p>
+    <div class="barlist" id="investorbars"></div>
+  </section>
+
+  <section id="mix">
+    <p class="eyebrow">Where the cheques went</p>
+    <h2>Sector mix of recent deals</h2>
+    <p>Adding up today's headline rounds by sector — where is the money actually landing?</p>
+    <div class="chartcard">
+      <div class="chart-holder"><canvas id="mixchart"></canvas></div>
+    </div>
+  </section>
+
+  <section id="frontier">
+    <p class="eyebrow">What's coming next</p>
+    <h2>The frontier: where new tech is taking things</h2>
+    <p class="lead">Brand-new tech is opening markets that barely existed a few years ago. Four fronts worth watching — each with the reason it's a durable moat.</p>
+    <div class="grid">
+      <div class="fcard"><h3>AI → the foundation</h3><p>AI is now the base layer under everything. India is the world's #2 home for generative-AI startups (~890). The next wave is "agents" — AI that does tasks (books, pays, files), not just answers.</p><p class="moat"><b>Why it's a moat:</b> not the model (anyone can rent one) — it's owning unique data and being the rails other AI agents must plug into. Data advantage plus network effects.</p></div>
+      <div class="fcard"><h3>Defence tech</h3><p>India builds drones and weapons at home now. Via iDEX, 676 startups joined and 58 won orders worth ₹3,853 crore (~$402M). Grants run up to ₹10 crore, with no equity taken.</p><p class="moat"><b>Why it's a moat:</b> a customer the government legally must buy from, plus years of security clearances rivals can't rush. Guaranteed demand and a high trust barrier.</p></div>
+      <div class="fcard"><h3>Healthtech</h3><p>Past delivery apps into real medical tech: AI reads scans (Qure.ai), screens breast cancer without radiation (Niramai), detects TB from a cough on a phone (Wadhwani AI). ~30% of money now goes to devices &amp; diagnostics.</p><p class="moat"><b>Why it's a moat:</b> hard-won approvals, clinical proof, and hospital workflow lock-in keep copycats years behind.</p></div>
+      <div class="fcard"><h3>Semiconductors</h3><p>India is building its first real chip fab (Tata + Taiwan's PSMC, Dholera, ~$11B), first chip ~Dec 2026. Micron already ships memory chips. 13 projects approved; ₹1,27,500 crore added for the ecosystem.</p><p class="moat"><b>Why it's a moat:</b> billions in capital and rare know-how — almost no one can compete head-on. In the ecosystem layer, proprietary design IP and materials chemistry.</p></div>
+    </div>
+  </section>
+
+  <section id="read" class="read">
+    <p class="eyebrow">Read the sources</p>
+    <h2>Where this comes from</h2>
+    <div id="sources"></div>
+  </section>
+
+  <section id="words">
+    <p class="eyebrow">Cheat sheet</p>
+    <h2>Words, decoded</h2>
+    <p>Tap any term to expand it. A comprehensive glossary — over 90 terms.</p>
+
+    <div class="term-h">Fund &amp; people</div>
+    <details class="term"><summary>LP (Limited Partner)</summary><p>The people or institutions — like pension funds or wealthy individuals — who put money into a VC fund but don't pick the deals themselves.</p></details>
+    <details class="term"><summary>GP (General Partner)</summary><p>The people who run the VC fund, decide which startups to back, and get paid to manage the LPs' money.</p></details>
+    <details class="term"><summary>Carry (carried interest)</summary><p>The VC fund's cut of the profits — usually around 20% — paid only if the fund actually makes money.</p></details>
+    <details class="term"><summary>"2 and 20"</summary><p>The classic VC fee deal: 2% of the fund charged every year to run it, plus 20% of any profit (the carry).</p></details>
+    <details class="term"><summary>AIF (Alternative Investment Fund)</summary><p>India's legal category for VC and private-equity funds, registered with SEBI so they can legally pool and invest money.</p></details>
+    <details class="term"><summary>Fund of Funds</summary><p>A fund that doesn't invest in startups directly — it invests in other VC funds, spreading its bets across many managers at once.</p></details>
+    <details class="term"><summary>Dry powder</summary><p>Money funds have raised but not yet invested, waiting to be deployed.</p></details>
+    <details class="term"><summary>Thesis</summary><p>A clear belief about the future you'd bet money on. Always has a "because."</p></details>
+    <details class="term"><summary>Power law</summary><p>In VC, one or two huge wins in a fund's whole portfolio can make up for every other investment losing money — returns aren't spread evenly, they're extreme.</p></details>
+    <details class="term"><summary>Angel Investor</summary><p>A wealthy individual who invests their own money into a very early startup, often before any VC fund gets involved.</p></details>
+    <details class="term"><summary>Anchor investor</summary><p>The first investor to commit to a round with enough credibility that others feel safe following them in.</p></details>
+    <details class="term"><summary>Accelerator</summary><p>A short, fixed-length program that gives early startups a bit of money, mentorship and a public demo day in exchange for a small slice of equity.</p></details>
+    <details class="term"><summary>Incubator</summary><p>A program that helps a very early idea turn into an actual company, often stepping in before there's even a product yet.</p></details>
+    <details class="term"><summary>Investment Syndicate</summary><p>A group of investors who pool their money together and invest in the same deal as one unit.</p></details>
+    <details class="term"><summary>Capital Call</summary><p>The moment a VC fund actually asks its LPs to send over money they had earlier promised to invest.</p></details>
+    <details class="term"><summary>LPA (Limited Partnership Agreement)</summary><p>The core legal contract between a fund's GP and its LPs that spells out how the fund will be run.</p></details>
+    <details class="term"><summary>Management Fee</summary><p>The yearly fee — often around 2% of the fund — a VC firm charges just to operate, no matter how the investments perform.</p></details>
+    <details class="term"><summary>Fiduciary</summary><p>Someone who is legally required to act in your best interest with your money, not their own.</p></details>
+    <details class="term"><summary>K1</summary><p>The yearly US tax form a fund sends each investor showing their personal share of the fund's profit or loss.</p></details>
+    <details class="term"><summary>Key man clause</summary><p>A rule letting LPs pause a fund's new investments if a specific star dealmaker at the firm leaves.</p></details>
+
+    <div class="term-h">Money &amp; rounds</div>
+    <details class="term"><summary>Seed / Series A-B-C</summary><p>The funding stages a startup climbs: Seed proves an idea works, Series A proves it can grow, Series B-C pour in bigger cheques to scale what's already working.</p></details>
+    <details class="term"><summary>Lead investor</summary><p>The VC who sets the price and terms of a round and puts in the biggest cheque — everyone else in the round usually follows their lead.</p></details>
+    <details class="term"><summary>Term sheet</summary><p>A short document laying out the price, size and rules of an investment before the full legal paperwork is signed.</p></details>
+    <details class="term"><summary>Pre-money / post-money valuation</summary><p>Pre-money is what the startup is worth before new cash comes in; post-money is that number plus the new money raised.</p></details>
+    <details class="term"><summary>SAFE / convertible note</summary><p>A simple IOU that turns into shares later, at a future round's price, instead of setting a valuation right now — used to raise money fast and cheap.</p></details>
+    <details class="term"><summary>Down round</summary><p>Raising money at a lower price than last time. A sign the hype cooled.</p></details>
+    <details class="term"><summary>TAM</summary><p>Total size of the market if you won everything. VCs need this to be huge.</p></details>
+    <details class="term"><summary>Product-market fit</summary><p>The moment a product finally clicks with customers — demand pulls it forward instead of the founder having to push it.</p></details>
+    <details class="term"><summary>Due diligence</summary><p>The homework a VC does before investing — checking the numbers, the team, the contracts and the claims are all real.</p></details>
+    <details class="term"><summary>Moat</summary><p>What stops rivals from copying you: special data, hard tech, loyal customers, a licence.</p></details>
+    <details class="term"><summary>Exit</summary><p>How a VC turns its stake back into cash: the startup gets bought, or goes public (IPO).</p></details>
+    <details class="term"><summary>Unicorn / soonicorn</summary><p>A unicorn is a startup worth $1 billion or more; a soonicorn is one investors think is close to getting there.</p></details>
+    <details class="term"><summary>Secondary</summary><p>Buying shares from an existing shareholder (an early investor or employee) instead of the company itself — no new money reaches the startup.</p></details>
+    <details class="term"><summary>IPO &amp; M&amp;A</summary><p>The two main ways a startup "exits": IPO lists its shares on a public stock market; M&amp;A means a bigger company buys it outright.</p></details>
+    <details class="term"><summary>409A Valuation</summary><p>An independent, IRS-recognised appraisal of what a private company's common stock is actually worth, mainly used to price employee stock options fairly.</p></details>
+    <details class="term"><summary>Allocation</summary><p>The amount of a funding round an investor is actually permitted to put money into, which is sometimes less than they wanted.</p></details>
+    <details class="term"><summary>Bootstrapping</summary><p>Growing a company using only its own revenue or the founders' own savings, without taking outside investor money.</p></details>
+    <details class="term"><summary>Bridge Loan / Financing</summary><p>Short-term money that carries a startup from where it is now until its next real funding round closes.</p></details>
+    <details class="term"><summary>Convertible Debt</summary><p>A loan that's built to turn into equity later, usually at a discount, instead of simply being paid back in cash.</p></details>
+    <details class="term"><summary>Convertible</summary><p>Any investment that's designed to convert into equity shares down the line rather than pricing the company today.</p></details>
+    <details class="term"><summary>Fair Market Value</summary><p>What a share, or the whole company, would honestly sell for right now between a willing buyer and a willing seller.</p></details>
+    <details class="term"><summary>Friends and Family Round</summary><p>The very first, informal money a founder raises from people who trust them personally, before any professional investor gets involved.</p></details>
+    <details class="term"><summary>Fully Diluted</summary><p>A company's total share count if every option, warrant and convertible security were already turned into actual stock.</p></details>
+    <details class="term"><summary>Growth Equity</summary><p>Money invested into an already-proven company to help it scale faster, sitting between early-stage VC and buyout-stage private equity.</p></details>
+    <details class="term"><summary>Inside Round</summary><p>A funding round where only a startup's existing investors put in money, with no new outside investor joining.</p></details>
+    <details class="term"><summary>Letter of Intent (LOI)</summary><p>A short, mostly non-binding document that lays out the basic shape of a deal before the full contract gets written.</p></details>
+    <details class="term"><summary>Liquidity</summary><p>How easily an asset — like startup shares — can actually be turned into spendable cash.</p></details>
+    <details class="term"><summary>Elevator pitch</summary><p>A pitch for your startup made so short and clear you could deliver the whole thing during one elevator ride.</p></details>
+
+    <div class="term-h">Legal &amp; rights</div>
+    <details class="term"><summary>Cap table</summary><p>The spreadsheet showing who owns what percentage of a startup — founders, employees, and every investor.</p></details>
+    <details class="term"><summary>Dilution</summary><p>Your ownership percentage shrinking because the company issued new shares to new investors — the pie has more slices now.</p></details>
+    <details class="term"><summary>ESOP</summary><p>Employee Stock Ownership Plan — company shares set aside so employees can own a piece of what they're building, usually earned over time.</p></details>
+    <details class="term"><summary>Vesting</summary><p>The schedule that makes you earn your shares or options gradually over time (often 4 years), instead of getting them all on day one.</p></details>
+    <details class="term"><summary>Accredited Investor</summary><p>Someone who meets certain income or wealth rules that legally allow them to invest in private deals not open to the general public.</p></details>
+    <details class="term"><summary>Anti-dilution Clause</summary><p>A protection that adjusts an early investor's price if a later round sells shares more cheaply, so their stake isn't unfairly watered down.</p></details>
+    <details class="term"><summary>Blended Preferences</summary><p>When investors from several different funding rounds share one combined payout priority instead of being paid out strictly in the order they invested.</p></details>
+    <details class="term"><summary>Clawback</summary><p>A rule letting a fund take back money it already paid its GPs if the fund's overall results later don't justify it.</p></details>
+    <details class="term"><summary>Cliff</summary><p>The waiting period before any of your vesting shares actually start becoming yours — leave before it ends and you get nothing.</p></details>
+    <details class="term"><summary>Come Along Rights</summary><p>The right for a smaller shareholder to join in and sell their shares on the same terms when a bigger shareholder sells theirs.</p></details>
+    <details class="term"><summary>Control Rights</summary><p>Contract terms giving an investor a real say over specific big decisions a company makes, beyond just owning shares.</p></details>
+    <details class="term"><summary>Common Stock</summary><p>The everyday type of company share, usually held by founders and employees, that pays out only after preferred shareholders are covered.</p></details>
+    <details class="term"><summary>Covenant</summary><p>A promise a company makes to its investors or lenders — like keeping certain numbers healthy — as a condition of the deal.</p></details>
+    <details class="term"><summary>Cumulative Dividend</summary><p>A dividend that keeps piling up unpaid each year until the company finally pays it, instead of just disappearing if skipped.</p></details>
+    <details class="term"><summary>Cutback Rights</summary><p>A company's right to shrink how many shares its existing investors can sell in an IPO, so new public investors get enough to buy.</p></details>
+    <details class="term"><summary>Demand Registration Rights</summary><p>The right for investors to force a company to file the paperwork needed to sell their shares publicly.</p></details>
+    <details class="term"><summary>Drag-Along Rights</summary><p>The right letting a majority of shareholders force everyone else to sell too when the company gets acquired.</p></details>
+    <details class="term"><summary>Exercise Price (Strike Price)</summary><p>The fixed price you pay to actually buy your shares when you use, or "exercise," a stock option.</p></details>
+    <details class="term"><summary>First Refusal Rights</summary><p>The right to match any outside offer and buy shares yourself before they can be sold to someone else.</p></details>
+    <details class="term"><summary>Full Ratchet</summary><p>The toughest kind of anti-dilution protection — it resets an early investor's price all the way down to match a later, cheaper round.</p></details>
+    <details class="term"><summary>Grandfather Rights</summary><p>Letting an existing investor, or an old rule, keep more favourable terms even after the terms change for everyone new.</p></details>
+    <details class="term"><summary>General Solicitation</summary><p>Publicly advertising that you're raising money — something normally restricted to protect everyday, non-professional investors.</p></details>
+    <details class="term"><summary>Information Rights</summary><p>An investor's contractual right to regularly see a startup's financials and key numbers after they've invested.</p></details>
+    <details class="term"><summary>Investor's Rights Agreement</summary><p>The master contract that bundles an investor's information, voting and other protections into one document.</p></details>
+    <details class="term"><summary>Issuer</summary><p>Simply the company that is selling the shares or securities in a given deal.</p></details>
+    <details class="term"><summary>JOBS Act</summary><p>A US law that made it easier for smaller companies to raise money and for everyday people to invest in startups, including via crowdfunding.</p></details>
+    <details class="term"><summary>Liquidation</summary><p>Shutting a company down and selling off whatever is left to pay back whoever is owed money, in a set order of priority.</p></details>
+    <details class="term"><summary>Liquidation Preference</summary><p>A rule guaranteeing certain investors get their money back first — sometimes with a multiple on top — before anyone else gets paid in a sale.</p></details>
+    <details class="term"><summary>Lock-up Period</summary><p>A set window after an IPO during which company insiders are contractually blocked from selling their shares.</p></details>
+
+    <div class="term-h">Metrics</div>
+    <details class="term"><summary>Burn rate &amp; runway</summary><p>Burn rate is how fast a startup spends its cash each month; runway is how many months are left before the money runs out.</p></details>
+    <details class="term"><summary>ARR / MRR</summary><p>Annual / Monthly Recurring Revenue — the predictable subscription income a company can count on every year or month.</p></details>
+    <details class="term"><summary>CAC &amp; LTV</summary><p>CAC is what it costs to win one customer; LTV is how much that customer is worth over their whole relationship with you. LTV should beat CAC by a lot.</p></details>
+    <details class="term"><summary>NRR (net revenue retention)</summary><p>Of the revenue you had from existing customers a year ago, how much is left today after upgrades, downgrades and cancellations — above 100% means existing customers alone are growing the business.</p></details>
+    <details class="term"><summary>Churn</summary><p>The share of customers (or revenue) that leaves in a given period. Lower is better — it means people are sticking around.</p></details>
+    <details class="term"><summary>GMV</summary><p>Gross Merchandise Value — the total value of everything sold through a platform, before the platform takes its cut.</p></details>
+    <details class="term"><summary>Traction</summary><p>Early, real proof that people want what you built — users, revenue, or usage actually going up.</p></details>
+    <details class="term"><summary>Unit economics</summary><p>Does one customer make money after what it cost to serve them?</p></details>
+    <details class="term"><summary>ARPU</summary><p>The average amount of revenue a single user brings in over a given period.</p></details>
+    <details class="term"><summary>AOV</summary><p>The average amount of money a customer spends in a single order or transaction.</p></details>
+    <details class="term"><summary>ARRG Ratio</summary><p>A quick check on growth efficiency — how much new recurring revenue a company added compared with what it spent to get it.</p></details>
+    <details class="term"><summary>Conversion Rate or Ratio</summary><p>The share of people who take the action you wanted, like buying, out of everyone who had the chance to.</p></details>
+    <details class="term"><summary>Exit Velocity</summary><p>How fast a startup looks to be accelerating toward a big outcome, like an IPO or acquisition, based on its growth trend.</p></details>
+    <details class="term"><summary>Earnings before interest and taxes (EBIT)</summary><p>A company's profit before interest and tax costs are subtracted, used as a rough read on how the core business is performing.</p></details>
+    <details class="term"><summary>Gross Margin</summary><p>What's left over from a sale after covering the direct cost of delivering it, before any other expenses are paid.</p></details>
+
+    <div class="term-h">Deeptech &amp; India context</div>
+    <details class="term"><summary>Fab</summary><p>Short for "fabrication plant." A giant, spotlessly clean factory that makes chips out of silicon, almost atom by atom. Costs billions and years to build.</p></details>
+    <details class="term"><summary>Micron / PSMC / ASML</summary><p>Micron: a US memory-chip firm now packaging/testing chips in Gujarat. PSMC: Tata's Taiwanese partner bringing chipmaking know-how. ASML: the Dutch firm that makes the only machines advanced chips can't be built without.</p></details>
+    <details class="term"><summary>Node (28nm, 40nm…)</summary><p>How tiny a chip's features are. Smaller = more advanced and pricier. India starts with larger "mature" nodes, which are cheaper and power most everyday electronics.</p></details>
+    <details class="term"><summary>Wadhwani AI</summary><p>An Indian non-profit lab building AI for social good. Its "Cough Against TB" tool screens for tuberculosis from a cough recorded on a normal phone.</p></details>
+    <details class="term"><summary>iDEX</summary><p>A government program that gives defence-tech startups grants (up to ₹10 crore, no equity) and a path to sell directly to the armed forces.</p></details>
+    <details class="term"><summary>AI agent</summary><p>AI that doesn't just answer but does things for you — books a trip, pays a bill, files a form. The next wave, and it needs new "rails" built for it.</p></details>
+  </section>
+
+  <footer>
+    <p><b>India VC, simply</b> — a daily learning project, not investment advice. Figures are from public reporting and are approximate; verify before quoting.</p>
+    <p>New edition published daily, automatically. Built with Claude.</p>
+  </footer>
+</div>
+
+<script src="data.js"></script>
+<script>
+const GOATCOUNTER_CODE = "nebulavc"; // paste your GoatCounter code to switch on the counter
+// Instant no-signup option: delete the two lines above/below in the counter block and
+// drop this into the .counter span instead:
+// <img src="https://hits.sh/nebulatris.github.io.svg?label=views&color=12795a" alt="views">
+
+
+/* view counter */
+(function(){var el=document.getElementById('viewcount');
+  if(GOATCOUNTER_CODE==='YOURCODE'){el.textContent='—';return;}
+  var s=document.createElement('script');s.async=true;
+  s.setAttribute('data-goatcounter','https://'+GOATCOUNTER_CODE+'.goatcounter.com/count');
+  s.src='//gc.zgo.at/count.js';document.head.appendChild(s);
+  fetch('https://'+GOATCOUNTER_CODE+'.goatcounter.com/counter/TOTAL.json')
+    .then(function(r){return r.json();}).then(function(j){el.textContent=j.count;})
+    .catch(function(){el.textContent='—';});})();
+
+var B=window.BRIEF||{};
+function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e;}
+
+/* rotation window lookup — back-compat: a flat {labels,values,cap} is treated as "annual" */
+function rotationWindow(win){
+  var r=(B.charts&&B.charts.rotation)||{};
+  if(r.labels) return r;
+  return r[win]||r.annual||{labels:[],values:[],cap:''};
+}
+
+document.getElementById('today').textContent=B.dateLabel||new Date().toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});
+
+(B.stats||[]).forEach(function(s){var d=el('div','stat');d.appendChild(el('div','n',s.n));d.appendChild(el('div','l',s.l));document.getElementById('stats').appendChild(d);});
+
+if(B.bigIdea){document.getElementById('bi-title').textContent=B.bigIdea.title||'';
+  document.getElementById('bi-lead').textContent=B.bigIdea.lead||'';
+  document.getElementById('bi-body').textContent=B.bigIdea.body||'';
+  document.getElementById('bi-why').textContent=B.bigIdea.why||'';}
+
+(B.trends||[]).forEach(function(t){var d=el('div','trend');d.appendChild(el('h3',null,t.h));d.appendChild(el('p',null,t.p));
+  var w=el('div','why');var b=el('b',null,'Why it matters: ');w.appendChild(b);w.appendChild(document.createTextNode(t.why||''));d.appendChild(w);
+  document.getElementById('trendlist').appendChild(d);});
+
+(B.deals||[]).forEach(function(x){var d=el('div','deal');
+  var a=el('div','amt',x.amt);a.appendChild(el('span',null,x.sub||''));d.appendChild(a);
+  var r=el('div');var co=el('div','co',x.co+' ');var sm=el('small',null,x.sector?('— '+x.sector):'');co.appendChild(sm);
+  r.appendChild(co);r.appendChild(el('div','d',x.d||''));d.appendChild(r);
+  document.getElementById('deallist').appendChild(d);});
+
+/* investors */
+(function(){
+  var investors=B.investors||[];
+  var section=document.getElementById('investors');
+  if(!investors.length){if(section)section.style.display='none';return;}
+  var list=document.getElementById('investorlist');
+  investors.forEach(function(x){
+    var row=el('div','investor');
+    row.appendChild(el('span','firm',x.firm||''));
+    if(x.country)row.appendChild(el('span','cc',x.country));
+    row.appendChild(el('div','meta',[x.focus,x.deal].filter(Boolean).join(' · ')));
+    list.appendChild(row);
+  });
+  var counts={};
+  investors.forEach(function(x){var c=(x.country||'Other').trim();counts[c]=(counts[c]||0)+1;});
+  var entries=Object.keys(counts).map(function(k){return[k,counts[k]];}).sort(function(a,b){return b[1]-a[1];});
+  var max=entries.length?entries[0][1]:1;
+  var bars=document.getElementById('investorbars');
+  entries.forEach(function(e){
+    var row=el('div','barrow');
+    row.appendChild(el('div','ct',e[0]));
+    var track=el('div','track');var fill=el('div','fill');fill.style.width=(e[1]/max*100)+'%';track.appendChild(fill);
+    row.appendChild(track);row.appendChild(el('div','n',String(e[1])));
+    bars.appendChild(row);
+  });
+})();
+
+/* briefing deck */
+(function(){
+  var deck=B.deck;
+  var section=document.getElementById('deck');
+  if(!deck||!deck.summary){if(section)section.style.display='none';return;}
+  var view=document.getElementById('deckview');
+  var slides=[];
+
+  var s1=el('div','slide');s1.classList.add('active');
+  s1.appendChild(el('div','stag','01 · Executive summary'));
+  s1.appendChild(el('h3',null,'Where things stand'));
+  s1.appendChild(el('p',null,deck.summary||''));
+  var ul1=document.createElement('ul');
+  (deck.takeaways||[]).forEach(function(t){ul1.appendChild(el('li',null,t));});
+  s1.appendChild(ul1);
+  var ms=el('div','ministats');
+  (B.stats||[]).slice(0,3).forEach(function(s){var m=el('div','ministat');m.appendChild(el('div','n',s.n));m.appendChild(el('div','l',s.l));ms.appendChild(m);});
+  s1.appendChild(ms);
+  slides.push(s1);
+
+  var s2=el('div','slide');
+  s2.appendChild(el('div','stag',"02 · What's moving"));
+  s2.appendChild(el('h3',null,'Top sectors this year'));
+  var rw=rotationWindow('annual');
+  var pairs=(rw.labels||[]).map(function(l,i){return[l,(rw.values||[])[i]];});
+  pairs.sort(function(a,b){return(b[1]||0)-(a[1]||0);});
+  if(pairs.length){pairs.slice(0,4).forEach(function(p){
+    var row=el('div','rank');row.appendChild(el('b',null,p[0]));row.appendChild(el('span',null,(p[1]!=null?p[1]+'×':'')));s2.appendChild(row);});
+  }else{s2.appendChild(el('p',null,'No sector data yet.'));}
+  slides.push(s2);
+
+  var s3=el('div','slide');
+  s3.appendChild(el('div','stag',"03 · Who's backing it"));
+  s3.appendChild(el('h3',null,'Investors to watch'));
+  var inv=(B.investors||[]).slice(0,5);
+  if(inv.length){inv.forEach(function(x){
+    var row=el('div','rank');row.appendChild(el('b',null,x.firm||''));row.appendChild(el('span',null,x.country||''));s3.appendChild(row);});
+  }else{s3.appendChild(el('p',null,'No investor data yet.'));}
+  slides.push(s3);
+
+  var s4=el('div','slide');
+  s4.appendChild(el('div','stag','04 · So what?'));
+  s4.appendChild(el('h3',null,'What this means next'));
+  var ul4=document.createElement('ul');
+  (deck.implications||[]).forEach(function(t){ul4.appendChild(el('li',null,t));});
+  s4.appendChild(ul4);
+  slides.push(s4);
+
+  slides.forEach(function(s){view.appendChild(s);});
+  var dotsWrap=document.getElementById('deckdots');
+  var dots=slides.map(function(_,i){
+    var d=document.createElement('button');d.type='button';d.className='deckdot';d.setAttribute('aria-selected',i===0?'true':'false');
+    d.setAttribute('aria-label','Slide '+(i+1));
+    d.addEventListener('click',function(){go(i);});
+    dotsWrap.appendChild(d);return d;
+  });
+  var idx=0;
+  function go(i){idx=(i+slides.length)%slides.length;
+    slides.forEach(function(s,j){s.classList.toggle('active',j===idx);});
+    dots.forEach(function(d,j){d.setAttribute('aria-selected',j===idx?'true':'false');});}
+  document.getElementById('deckprev').addEventListener('click',function(){go(idx-1);});
+  document.getElementById('decknext').addEventListener('click',function(){go(idx+1);});
+
+  var deckVisible=false;
+  if(window.IntersectionObserver){new IntersectionObserver(function(es){deckVisible=es[0].isIntersecting;},{threshold:.3}).observe(section);}
+  document.addEventListener('keydown',function(e){
+    if(!deckVisible)return;
+    if(e.key==='ArrowRight'){go(idx+1);}else if(e.key==='ArrowLeft'){go(idx-1);}
+  });
+  var startX=null;
+  view.addEventListener('touchstart',function(e){startX=e.touches[0].clientX;},{passive:true});
+  view.addEventListener('touchend',function(e){
+    if(startX==null)return;
+    var dx=e.changedTouches[0].clientX-startX;
+    if(Math.abs(dx)>40){if(dx<0)go(idx+1);else go(idx-1);}
+    startX=null;
+  },{passive:true});
+})();
+
+(B.sources||[]).forEach(function(s){var a=el('a');a.href=s.url;a.target='_blank';a.rel='noopener';
+  a.appendChild(el('div','t',s.t));a.appendChild(el('div','s',s.s));document.getElementById('sources').appendChild(a);});
+
+/* sector mix doughnut */
+(function(){
+  var deals=B.deals||[];
+  var section=document.getElementById('mix');
+  if(!deals.length){if(section)section.style.display='none';return;}
+  function parseAmt(s){var m=String(s||'').match(/([\d.]+)\s*([MB])/i);if(!m)return 0;
+    var num=parseFloat(m[1]);return /b/i.test(m[2])?num*1000:num;}
+  var bySector={};
+  deals.forEach(function(d){var sec=(d.sector||'Other').trim();sec=sec.charAt(0).toUpperCase()+sec.slice(1);
+    bySector[sec]=(bySector[sec]||0)+parseAmt(d.amt);});
+  var labels=Object.keys(bySector);
+  var values=labels.map(function(k){return bySector[k];});
+  var palette=['#0B5C43','#12795A','#1F9974','#2FAF87','#4FBF97','#6FD1AE','#8FE0C4','#B3EEDB'];
+  new Chart(document.getElementById('mixchart'),{type:'doughnut',
+    data:{labels:labels,datasets:[{data:values,backgroundColor:labels.map(function(_,i){return palette[i%palette.length];}),
+      borderColor:css('--card'),borderWidth:2}]},
+    options:{responsive:true,maintainAspectRatio:false,cutout:'60%',
+      plugins:{legend:{position:'bottom',labels:{color:css('--ink-soft'),font:{family:'Inter'},padding:14,usePointStyle:true}},
+        tooltip:{backgroundColor:css('--ink'),titleColor:css('--paper'),bodyColor:css('--paper'),padding:10,cornerRadius:8,
+          callbacks:{label:function(c){var v=c.raw;return c.label+': $'+(v>=1000?(v/1000).toFixed(1)+'B':v+'M');}}}}}});
+})();
+
+/* charts */
+function css(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim();}
+var C=(B.charts)||{weekly:{labels:[],values:[]},gov:{labels:[],values:[]}};
+var rotWindow='annual';
+var rotWinLabel={monthly:'last month',quarterly:'last quarter',annual:'last year'};
+var chart;
+function draw(view){
+  var d=(view==='rotation')?rotationWindow(rotWindow):(C[view]||{labels:[],values:[]});
+  var soft=css('--ink-faint'),line=css('--line'),up=css('--up'),caution=css('--caution');
+  var horizontal=(view!=='weekly');var baseline=(view==='rotation')?1:null;
+  var colors=(d.values||[]).map(function(v){return(baseline&&v<baseline)?caution:up;});
+  if(chart)chart.destroy();
+  chart=new Chart(document.getElementById('chart'),{type:'bar',
+    data:{labels:d.labels||[],datasets:[{data:d.values||[],backgroundColor:colors,borderRadius:7,maxBarThickness:54}]},
+    options:{indexAxis:horizontal?'y':'x',responsive:true,maintainAspectRatio:false,
+      animation:{duration:600},
+      plugins:{legend:{display:false},
+        tooltip:{backgroundColor:css('--ink'),titleColor:css('--paper'),bodyColor:css('--paper'),padding:10,cornerRadius:8,displayColors:false,
+          callbacks:{label:function(c){var v=c.raw;
+            if(view==='rotation')return v+'× vs '+(rotWinLabel[rotWindow]||'last year');
+            if(view==='gov')return '₹'+Number(v).toLocaleString('en-IN')+' crore';
+            return '$'+v+' million';}}}},
+      scales:{x:{grid:{color:line,drawBorder:false},ticks:{color:soft,font:{family:'Inter'}}},
+              y:{grid:{color:line,drawBorder:false},ticks:{color:soft,font:{family:'Inter'}}}}}});
+  document.getElementById('chartcap').textContent=d.cap||'';}
+var tabs=document.querySelectorAll('.tab');
+var rotToggle=document.getElementById('rotToggle');
+tabs.forEach(function(t){t.addEventListener('click',function(){
+  tabs.forEach(function(x){x.setAttribute('aria-selected','false');});t.setAttribute('aria-selected','true');
+  rotToggle.style.display=(t.dataset.view==='rotation')?'flex':'none';
+  draw(t.dataset.view);});});
+var segbtns=document.querySelectorAll('#rotToggle .segbtn');
+segbtns.forEach(function(b){b.addEventListener('click',function(){
+  segbtns.forEach(function(x){x.setAttribute('aria-selected','false');});b.setAttribute('aria-selected','true');
+  rotWindow=b.dataset.win;draw('rotation');});});
+draw('weekly');
+if(window.matchMedia){window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',function(){draw(document.querySelector('.tab[aria-selected="true"]').dataset.view);});}
+
+/* progress bar */
+window.addEventListener('scroll',function(){var h=document.documentElement;var sc=(h.scrollTop)/(h.scrollHeight-h.clientHeight);document.getElementById('progress').style.width=(sc*100)+'%';},{passive:true});
+
+/* timeline reveal */
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)e.target.classList.add('in');});},{threshold:.2});
+document.querySelectorAll('.era').forEach(function(e){io.observe(e);});
+
+/* active nav highlight */
+var navlinks=document.querySelectorAll('nav.top a');
+var secs=[].map.call(navlinks,function(a){return document.querySelector(a.getAttribute('href'));});
+var navio=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){
+  var id='#'+e.target.id;navlinks.forEach(function(a){a.classList.toggle('active',a.getAttribute('href')===id);});}});},{rootMargin:'-45% 0px -50% 0px'});
+secs.forEach(function(s){if(s)navio.observe(s);});
+</script>
+</body>
+</html>
