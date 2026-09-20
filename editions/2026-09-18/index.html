@@ -65,6 +65,12 @@
   .why{background:var(--up-soft);border-radius:10px;padding:13px 16px;font-size:15.5px;margin:6px 0 0;}
   .why b{color:var(--accent);}
 
+  .continuity{display:none;align-items:center;gap:12px;background:var(--up-soft);border-radius:10px;
+    padding:12px 16px;margin:24px 0 0;font-size:14.5px;color:var(--ink-soft);}
+  .continuity.show{display:flex;}
+  .continuity-badge{flex-shrink:0;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;
+    color:var(--accent);background:var(--card);border-radius:999px;padding:4px 10px;}
+
   .chartcard{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;margin-top:8px;}
   .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;}
   .tab{appearance:none;border:1px solid var(--line);background:transparent;color:var(--ink-soft);border-radius:999px;padding:8px 15px;font:inherit;font-size:14px;font-weight:500;cursor:pointer;transition:.15s;}
@@ -104,6 +110,12 @@
   .slide .rank:first-of-type{border-top:none;}
   .slide .rank b{font-weight:600;}
   .slide .rank span:last-child{color:var(--ink-faint);}
+  .slide .mrow{display:flex;align-items:center;gap:10px;margin-top:9px;font-size:14px;}
+  .slide .mrow:first-of-type{margin-top:0;}
+  .slide .mlabel{width:104px;flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .slide .mtrack{flex:1;height:20px;background:var(--line);border-radius:5px;overflow:hidden;}
+  .slide .mfill{height:100%;border-radius:5px;background:var(--accent);display:flex;align-items:center;
+    justify-content:flex-end;padding-right:8px;color:#fff;font-size:11.5px;font-weight:600;white-space:nowrap;}
   .deckctl{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:14px;}
   .deckbtn{appearance:none;border:1px solid var(--line);background:var(--card);color:var(--ink);width:34px;height:34px;
     border-radius:50%;cursor:pointer;font-size:15px;line-height:1;}
@@ -161,6 +173,14 @@
   .fcard .moat{border-left:3px solid var(--accent);padding-left:12px;font-size:14px;color:var(--ink-soft);}
   .fcard .moat b{color:var(--ink);}
 
+  .cotd-card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:26px 28px;margin-top:20px;}
+  .cotd-card:first-child{margin-top:8px;}
+  .cotd-head{font-family:"Fraunces",serif;font-weight:600;font-size:clamp(21px,3.2vw,27px);letter-spacing:-.01em;margin:0 0 16px;line-height:1.2;}
+  .cotd-bullets{display:flex;flex-direction:column;gap:9px;margin-bottom:6px;}
+  .cotd-bullet{font-size:16.5px;padding-left:20px;position:relative;color:var(--ink-soft);}
+  .cotd-bullet::before{content:"";position:absolute;left:0;top:9px;width:8px;height:8px;border-radius:50%;background:var(--accent);}
+  .cotd-source{font-size:12.5px;color:var(--ink-faint);margin-top:12px;}
+
   .read a{display:block;text-decoration:none;padding:14px 0;border-top:1px solid var(--line);color:inherit;}
   .read a:first-of-type{border-top:none;}
   .read .t{font-weight:600;font-size:16px;}
@@ -194,6 +214,7 @@
     <a href="#history">History</a>
     <a href="#investors">Backers</a>
     <a href="#frontier">Frontier</a>
+    <a href="#chartsofday">Charts</a>
     <a href="#words">Words</a>
   </nav>
   <span class="counter"><span class="dot"></span><b id="viewcount">…</b>&nbsp;views</span>
@@ -208,15 +229,16 @@
     <div class="stats" id="stats"></div>
   </header>
 
+  <div class="continuity" id="continuity"><span class="continuity-badge" id="continuity-badge"></span><span id="continuity-note"></span></div>
+
   <section id="money" style="border-top:none;margin-top:8px;padding-top:8px;">
-    <p class="eyebrow">The money, in three pictures</p>
+    <p class="eyebrow">The money, in two pictures</p>
     <h2>Follow the money</h2>
     <p>Tap a tab to switch views. Hover or tap any bar for the exact number.</p>
     <div class="chartcard">
       <div class="tabs" role="tablist">
         <button class="tab" role="tab" aria-selected="true" data-view="weekly">Weekly inflow</button>
         <button class="tab" role="tab" aria-selected="false" data-view="rotation">Sector rotation</button>
-        <button class="tab" role="tab" aria-selected="false" data-view="gov">Government money</button>
       </div>
       <div class="seg" id="rotToggle" role="tablist" aria-label="Rotation time window">
         <button class="segbtn" data-win="monthly" aria-selected="false">Monthly</button>
@@ -273,6 +295,10 @@
     <p class="eyebrow">Why the shift is happening</p>
     <h2>The government put real money down</h2>
     <p>A big reason the money turned toward deeptech isn't fashion — the government started acting like a huge, patient investor, lowering risk so private VCs follow. What it committed:</p>
+    <div class="chartcard">
+      <div class="chart-holder" style="height:300px;"><canvas id="govchart"></canvas></div>
+      <p class="chart-cap" id="govchartcap"></p>
+    </div>
     <div class="gov-row"><div class="amt">₹1 lakh cr<span>~$12B · 2025</span></div><div><div class="nm">RDI Scheme (Research, Development &amp; Innovation)</div><div class="ds">The biggest R&amp;D push in India's history. Cheap, long-term money for slow, hard science — AI, chips, space, biotech. Includes a Deep-Tech Fund of Funds.</div></div></div>
     <div class="gov-row"><div class="amt">₹76,000 cr<span>Semiconductor Mission</span></div><div><div class="nm">India Semiconductor Mission</div><div class="ds">Money to build chip plants and design in India, so the country stops importing almost all its chips. Total project investments already cross ₹1.6 lakh crore.</div></div></div>
     <div class="gov-row"><div class="amt">₹10,372 cr<span>IndiaAI Mission</span></div><div><div class="nm">IndiaAI Mission</div><div class="ds">National AI "compute" (thousands of GPUs), Indian AI models, and funding for AI startups — so India isn't dependent on foreign AI infrastructure.</div></div></div>
@@ -314,6 +340,13 @@
       <div class="fcard"><h3>Healthtech</h3><p>Past delivery apps into real medical tech: AI reads scans (Qure.ai), screens breast cancer without radiation (Niramai), detects TB from a cough on a phone (Wadhwani AI). ~30% of money now goes to devices &amp; diagnostics.</p><p class="moat"><b>Why it's a moat:</b> hard-won approvals, clinical proof, and hospital workflow lock-in keep copycats years behind.</p></div>
       <div class="fcard"><h3>Semiconductors</h3><p>India is building its first real chip fab (Tata + Taiwan's PSMC, Dholera, ~$11B), first chip ~Dec 2026. Micron already ships memory chips. 13 projects approved; ₹1,27,500 crore added for the ecosystem.</p><p class="moat"><b>Why it's a moat:</b> billions in capital and rare know-how — almost no one can compete head-on. In the ecosystem layer, proprietary design IP and materials chemistry.</p></div>
     </div>
+  </section>
+
+  <section id="chartsofday">
+    <p class="eyebrow">Charts of the day</p>
+    <h2>The bigger picture, in numbers</h2>
+    <p>A couple of numbers worth knowing beyond today's headlines.</p>
+    <div id="cotdlist"></div>
   </section>
 
   <section id="read" class="read">
@@ -462,6 +495,9 @@ const GOATCOUNTER_CODE = "nebulavc"; // paste your GoatCounter code to switch on
 
 var B=window.BRIEF||{};
 function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e;}
+/* drawBars() charts share this registry — initialized up front since some IIFEs
+   below (charts of the day) call drawBars() before the later charts block runs. */
+var chartInstances={};
 
 /* rotation window lookup — back-compat: a flat {labels,values,cap} is treated as "annual" */
 function rotationWindow(win){
@@ -473,6 +509,13 @@ function rotationWindow(win){
 document.getElementById('today').textContent=B.dateLabel||new Date().toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});
 
 (B.stats||[]).forEach(function(s){var d=el('div','stat');d.appendChild(el('div','n',s.n));d.appendChild(el('div','l',s.l));document.getElementById('stats').appendChild(d);});
+
+if(B.continuity&&B.continuity.note){
+  var contBadge={developing:'Following up',quiet:'Still developing'}[B.continuity.status]||'Update';
+  document.getElementById('continuity-badge').textContent=contBadge;
+  document.getElementById('continuity-note').textContent=B.continuity.note;
+  document.getElementById('continuity').classList.add('show');
+}
 
 if(B.bigIdea){document.getElementById('bi-title').textContent=B.bigIdea.title||'';
   document.getElementById('bi-lead').textContent=B.bigIdea.lead||'';
@@ -542,8 +585,18 @@ if(B.bigIdea){document.getElementById('bi-title').textContent=B.bigIdea.title||'
   var rw=rotationWindow('annual');
   var pairs=(rw.labels||[]).map(function(l,i){return[l,(rw.values||[])[i]];});
   pairs.sort(function(a,b){return(b[1]||0)-(a[1]||0);});
-  if(pairs.length){pairs.slice(0,4).forEach(function(p){
-    var row=el('div','rank');row.appendChild(el('b',null,p[0]));row.appendChild(el('span',null,(p[1]!=null?p[1]+'×':'')));s2.appendChild(row);});
+  if(pairs.length){
+    var top4=pairs.slice(0,4);
+    var mx=Math.max.apply(null,top4.map(function(p){return p[1]||0;}));
+    top4.forEach(function(p){
+      var row=el('div','mrow');
+      row.appendChild(el('div','mlabel',p[0]));
+      var track=el('div','mtrack');var fill=el('div','mfill');
+      fill.style.width=Math.max(10,((p[1]||0)/mx*100))+'%';
+      fill.textContent=(p[1]!=null?p[1]+'×':'');
+      track.appendChild(fill);row.appendChild(track);
+      s2.appendChild(row);
+    });
   }else{s2.appendChild(el('p',null,'No sector data yet.'));}
   slides.push(s2);
 
@@ -620,31 +673,100 @@ if(B.bigIdea){document.getElementById('bi-title').textContent=B.bigIdea.title||'
           callbacks:{label:function(c){var v=c.raw;return c.label+': $'+(v>=1000?(v/1000).toFixed(1)+'B':v+'M');}}}}}});
 })();
 
+/* charts of the day — a16z-style punchy headline + stat bullets + one chart, per item */
+(function(){
+  var items=B.chartsOfTheDay||[];
+  var section=document.getElementById('chartsofday');
+  if(!items.length){if(section)section.style.display='none';return;}
+  var list=document.getElementById('cotdlist');
+  var palette=['#0B5C43','#12795A','#1F9974','#2FAF87','#4FBF97','#6FD1AE','#8FE0C4','#B3EEDB'];
+  items.slice(0,3).forEach(function(item,idx){
+    var card=el('div','cotd-card');
+    card.appendChild(el('h3','cotd-head',item.headline||''));
+    var bl=el('div','cotd-bullets');
+    (item.bullets||[]).slice(0,3).forEach(function(b){bl.appendChild(el('div','cotd-bullet',b));});
+    card.appendChild(bl);
+    var chart=item.chart||{};
+    var cid='cotdchart'+idx,capId='cotdcap'+idx;
+    if((chart.labels||[]).length){
+      var cc=el('div','chartcard');cc.style.marginTop='16px';
+      var ch=el('div','chart-holder');ch.style.height='220px';
+      var canvas=document.createElement('canvas');canvas.id=cid;
+      ch.appendChild(canvas);cc.appendChild(ch);
+      var cap=el('p','chart-cap');cap.id=capId;cc.appendChild(cap);
+      card.appendChild(cc);
+    }
+    if(item.source)card.appendChild(el('div','cotd-source',item.source));
+    list.appendChild(card);
+
+    var unit=chart.unit||'';
+    var suffix=unit==='x'?'×':(unit==='%'?'%':(unit?(' '+unit):''));
+    if(chart.type==='doughnut'){
+      new Chart(document.getElementById(cid),{type:'doughnut',
+        data:{labels:chart.labels||[],datasets:[{data:chart.values||[],
+          backgroundColor:(chart.labels||[]).map(function(_,i){return palette[i%palette.length];}),
+          borderColor:css('--card'),borderWidth:2}]},
+        options:{responsive:true,maintainAspectRatio:false,cutout:'60%',
+          plugins:{legend:{position:'bottom',labels:{color:css('--ink-soft'),font:{family:'Inter'},padding:12,usePointStyle:true}},
+            tooltip:{backgroundColor:css('--ink'),titleColor:css('--paper'),bodyColor:css('--paper'),padding:10,cornerRadius:8,
+              callbacks:{label:function(c){return c.label+': '+c.raw+suffix;}}}}}});
+      var capEl=document.getElementById(capId);if(capEl)capEl.textContent=chart.cap||'';
+    }else if(chart.type==='line'){
+      new Chart(document.getElementById(cid),{type:'line',
+        data:{labels:chart.labels||[],datasets:[{data:chart.values||[],borderColor:css('--accent'),
+          backgroundColor:css('--up-soft'),fill:true,tension:.35,pointRadius:4,pointBackgroundColor:css('--accent'),borderWidth:2.5}]},
+        options:{responsive:true,maintainAspectRatio:false,
+          plugins:{legend:{display:false},
+            tooltip:{backgroundColor:css('--ink'),titleColor:css('--paper'),bodyColor:css('--paper'),padding:10,cornerRadius:8,displayColors:false,
+              callbacks:{label:function(c){return c.raw+suffix;}}}},
+          scales:{x:{grid:{display:false},ticks:{color:css('--ink-faint'),font:{family:'Inter'}}},
+                  y:{grid:{color:css('--line'),drawBorder:false},ticks:{color:css('--ink-faint'),font:{family:'Inter'}}}}}});
+      var capEl2=document.getElementById(capId);if(capEl2)capEl2.textContent=chart.cap||'';
+    }else if((chart.labels||[]).length){
+      drawBars(cid,capId,{labels:chart.labels,values:chart.values,cap:chart.cap},{
+        horizontal:true,baseline:null,tooltipLabel:function(c){return c.raw+suffix;}});
+    }
+  });
+})();
+
 /* charts */
 function css(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim();}
 var C=(B.charts)||{weekly:{labels:[],values:[]},gov:{labels:[],values:[]}};
-var rotWindow='annual';
-var rotWinLabel={monthly:'last month',quarterly:'last quarter',annual:'last year'};
-var chart;
-function draw(view){
-  var d=(view==='rotation')?rotationWindow(rotWindow):(C[view]||{labels:[],values:[]});
+/* Reusable horizontal/vertical bar chart, shared by the money tabs, the gov
+   chart, and any bar-typed "charts of the day" entries — one drawing routine,
+   no repeated Chart.js config. */
+function drawBars(canvasId,capId,data,opts){
+  opts=opts||{};
   var soft=css('--ink-faint'),line=css('--line'),up=css('--up'),caution=css('--caution');
-  var horizontal=(view!=='weekly');var baseline=(view==='rotation')?1:null;
-  var colors=(d.values||[]).map(function(v){return(baseline&&v<baseline)?caution:up;});
-  if(chart)chart.destroy();
-  chart=new Chart(document.getElementById('chart'),{type:'bar',
-    data:{labels:d.labels||[],datasets:[{data:d.values||[],backgroundColor:colors,borderRadius:7,maxBarThickness:54}]},
+  var horizontal=opts.horizontal!==false;
+  var baseline=(opts.baseline!=null)?opts.baseline:null;
+  var colors=(data.values||[]).map(function(v){return(baseline!=null&&v<baseline)?caution:up;});
+  var canvas=document.getElementById(canvasId);
+  if(!canvas)return;
+  if(chartInstances[canvasId])chartInstances[canvasId].destroy();
+  chartInstances[canvasId]=new Chart(canvas,{type:'bar',
+    data:{labels:data.labels||[],datasets:[{data:data.values||[],backgroundColor:colors,borderRadius:7,maxBarThickness:54}]},
     options:{indexAxis:horizontal?'y':'x',responsive:true,maintainAspectRatio:false,
       animation:{duration:600},
       plugins:{legend:{display:false},
         tooltip:{backgroundColor:css('--ink'),titleColor:css('--paper'),bodyColor:css('--paper'),padding:10,cornerRadius:8,displayColors:false,
-          callbacks:{label:function(c){var v=c.raw;
-            if(view==='rotation')return v+'× vs '+(rotWinLabel[rotWindow]||'last year');
-            if(view==='gov')return '₹'+Number(v).toLocaleString('en-IN')+' crore';
-            return '$'+v+' million';}}}},
+          callbacks:{label:opts.tooltipLabel||function(c){return c.raw;}}}},
       scales:{x:{grid:{color:line,drawBorder:false},ticks:{color:soft,font:{family:'Inter'}}},
               y:{grid:{color:line,drawBorder:false},ticks:{color:soft,font:{family:'Inter'}}}}}});
-  document.getElementById('chartcap').textContent=d.cap||'';}
+  if(capId){var capEl=document.getElementById(capId);if(capEl)capEl.textContent=data.cap||'';}
+}
+var rotWindow='annual';
+var rotWinLabel={monthly:'last month',quarterly:'last quarter',annual:'last year'};
+function draw(view){
+  var d=(view==='rotation')?rotationWindow(rotWindow):(C[view]||{labels:[],values:[]});
+  drawBars('chart','chartcap',d,{
+    horizontal:(view!=='weekly'),
+    baseline:(view==='rotation')?1:null,
+    tooltipLabel:function(c){var v=c.raw;
+      if(view==='rotation')return v+'× vs '+(rotWinLabel[rotWindow]||'last year');
+      return '$'+v+' million';}
+  });
+}
 var tabs=document.querySelectorAll('.tab');
 var rotToggle=document.getElementById('rotToggle');
 tabs.forEach(function(t){t.addEventListener('click',function(){
@@ -656,7 +778,15 @@ segbtns.forEach(function(b){b.addEventListener('click',function(){
   segbtns.forEach(function(x){x.setAttribute('aria-selected','false');});b.setAttribute('aria-selected','true');
   rotWindow=b.dataset.win;draw('rotation');});});
 draw('weekly');
-if(window.matchMedia){window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',function(){draw(document.querySelector('.tab[aria-selected="true"]').dataset.view);});}
+drawBars('govchart','govchartcap',C.gov||{labels:[],values:[]},{
+  horizontal:true,baseline:null,
+  tooltipLabel:function(c){return '₹'+Number(c.raw).toLocaleString('en-IN')+' crore';}
+});
+if(window.matchMedia){window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',function(){
+  draw(document.querySelector('.tab[aria-selected="true"]').dataset.view);
+  drawBars('govchart','govchartcap',C.gov||{labels:[],values:[]},{horizontal:true,baseline:null,
+    tooltipLabel:function(c){return '₹'+Number(c.raw).toLocaleString('en-IN')+' crore';}});
+});}
 
 /* progress bar */
 window.addEventListener('scroll',function(){var h=document.documentElement;var sc=(h.scrollTop)/(h.scrollHeight-h.clientHeight);document.getElementById('progress').style.width=(sc*100)+'%';},{passive:true});
@@ -667,7 +797,7 @@ document.querySelectorAll('.era').forEach(function(e){io.observe(e);});
 
 /* active nav highlight */
 var navlinks=document.querySelectorAll('nav.top a');
-var secs=[].map.call(navlinks,function(a){return document.querySelector(a.getAttribute('href'));});
+var secs=[].map.call(navlinks,function(a){var href=a.getAttribute('href');return href&&href.charAt(0)==='#'?document.querySelector(href):null;});
 var navio=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){
   var id='#'+e.target.id;navlinks.forEach(function(a){a.classList.toggle('active',a.getAttribute('href')===id);});}});},{rootMargin:'-45% 0px -50% 0px'});
 secs.forEach(function(s){if(s)navio.observe(s);});

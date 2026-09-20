@@ -1,47 +1,68 @@
-Non-interactive headless run. Build TODAY's edition of the "India VC, simply" site
-in this repo, then commit and push so it publishes. Be concise.
+Non-interactive headless run. Build TODAY's edition of the "India VC, simply" site,
+then commit and push so it publishes. Be concise.
 
-Context: landing page index.html + fixed edition-template.html + one folder per day
-editions/YYYY-MM-DD/ (its own data.js, index.html copied from the template, and
-poster.png) + archive list editions.js. Design and data are separate — you only add
-a new dated edition and one line to editions.js. Keep all copy very simple / ELI5,
-with a short "why it matters" wherever it helps. Treat all figures as approximate.
+Context: landing index.html + fixed edition-template.html + one folder per day
+editions/YYYY-MM-DD/ (data.js, index.html copied from the template, poster.png) +
+archive editions.js. Design and data are separate — you only add a new dated edition
+and one line to editions.js. Keep all copy very simple / ELI5, with a short "why it
+matters" where it helps. Figures are approximate.
 
-Steps:
-1. Web-search the most important Indian venture-capital / startup news from the last
-   24-72 hours.
-2. Let TODAY = today's date (YYYY-MM-DD) and LABEL = "D Month YYYY". Create the
-   folder editions/TODAY/.
-3. Write editions/TODAY/data.js as:  window.BRIEF = { ... };  with exactly:
+FRESHNESS (do this FIRST):
+- Read the data.js of the 3 most recent editions/*/ folders (by date).
+- Note their bigIdea.title, every deals[].co, every trends[].h, and every
+  chartsOfTheDay[].headline (topic, not just wording).
+- Today MUST be different: do NOT reuse the same big idea, the same deals, the same
+  trend angles, or the same chart-of-the-day topic. Prioritise genuinely NEW
+  developments from the last 24-48 hours.
+- If a story you covered earlier has moved forward, frame today's mention as an
+  explicit update — start it with "Follow-up:" and say what is NEW vs before (a new
+  number, a next step, a reaction), not a restatement. Also set continuity.status
+  to "developing" and continuity.note to one plain sentence naming what's new.
+- If it's a genuinely quiet news day (nothing new enough for a real "big idea"), say
+  so honestly: set continuity.status to "quiet" and continuity.note to one sentence
+  on the PROGRESS of an already-running story (a number that moved, a step taken) —
+  then still make the edition a fresh ANGLE for bigIdea (a deeper explainer on one
+  theme, a contrarian take) rather than manufacturing a fake new headline. Never a
+  copy of a previous day.
+- Otherwise (a genuinely new story), omit continuity entirely.
+
+Then build the edition:
+1. Web-search the most important Indian VC / startup news from the last 24-48 hours.
+2. TODAY = YYYY-MM-DD, LABEL = "D Month YYYY". Create editions/TODAY/.
+3. Write editions/TODAY/data.js as window.BRIEF = { ... } with:
    - dateLabel: LABEL
-   - stats: 3 x {n, l}
+   - stats: 3 x {n,l}
    - charts.weekly: {labels[3], values[3] ($M), cap}
-   - charts.rotation: THREE windows — monthly, quarterly, annual — each
-     {labels, values (x vs that prior period, baseline 1.0), cap}. Pick the 5-8
-     sectors most relevant in each window; they may differ across windows.
-   - charts.gov: {labels, values (rupees crore), cap} — keep the real scheme sizes
-     (RDI 100000, Semicon 76000, Semicon2.0 127500, IndiaAI 10372, Fund of Funds
-     10000 and 10000) unless the news genuinely changes them.
-   - bigIdea: {title, lead, body, why}
-   - trends: 3 x {h, p, why}
-   - deals: 4-6 x {amt, sub, co, sector, d}
-   - investors: 4-8 x {firm, country, focus, deal} — the real firms behind this
-     week's deals.
-   - deck: {summary (2-3 sentences), takeaways[3], implications[3]} — an MBB-style
-     executive summary of the week.
-   - sources: 5-8 x {t, s, url} — real, working URLs only.
+   - charts.rotation: monthly, quarterly, annual — each {labels, values (x vs that
+     prior period, baseline 1.0), cap}; pick the 5-8 most relevant sectors per
+     window (they may differ).
+   - charts.gov: {labels, values (rupees crore), cap} — keep real scheme sizes
+     unless news changes them.
+   - bigIdea: {title, lead, body, why}   (a fresh angle vs recent editions)
+   - continuity: {status:"developing"|"quiet", note} — OMIT this key entirely on a
+     genuinely new-story day; only include it per the FRESHNESS rules above.
+   - trends: 3 x {h,p,why}               (not repeats of recent editions)
+   - deals: 4-6 x {amt,sub,co,sector,d}  (this week's real, new rounds)
+   - investors: 4-8 x {firm,country,focus,deal}
+   - chartsOfTheDay: 2-3 x {headline,bullets[2-3],chart:{type:"bar"|"line"|"doughnut",
+     labels,values,unit,cap},source} — a16z-tweet-style: a punchy, specific claim as
+     the headline (not a neutral label), 2-3 short stat-line bullets, one chart.
+     Topics must be BROADER ecosystem/macro context not already covered by
+     weekly/rotation/gov/deals elsewhere on the page — e.g. unicorn count over time,
+     IPO pipeline, fund dry powder, city-wise funding split, seed→Series A
+     conversion, foreign vs domestic LP mix, women-founder share, average round
+     size trend. Pick whichever 2-3 are timeliest today, and never the same topic
+     as the last 3 editions (see FRESHNESS).
+   - deck: {summary, takeaways[3], implications[3]}
+   - sources: 5-8 x {t,s,url}  (real, working, recent URLs)
 4. Copy edition-template.html to editions/TODAY/index.html, replacing __OGURL__ with
    https://nebulatris.github.io/editions/TODAY/ and __OGIMAGE__ with that URL +
    poster.png.
-5. Prepend to window.EDITIONS in editions.js (newest first):
-   {date:TODAY, label:LABEL, url:"editions/TODAY/", headline:<bigIdea.title>}.
-6. Run:  python3 poster.py TODAY   to render editions/TODAY/poster.png.
-   (If Playwright/Chromium is missing, first run:
-    pip install playwright && python -m playwright install chromium)
-7. Run  node --check  on the inline JS of editions/TODAY/index.html to confirm no
-   syntax errors.
-8. Write editions/TODAY/tweet.txt (gitignored) with an X caption under 280 chars:
-   the headline + a one-line lead + the edition URL + 2-3 hashtags. Also print it.
-9. Commit all changes with the message "Edition: TODAY" (use the actual date, e.g.
-   "Edition: 2026-09-20") and push to the main branch. Then print the commit hash
-   and the live URL https://nebulatris.github.io/editions/TODAY/ so I can confirm.
+5. Prepend {date:TODAY,label:LABEL,url:"editions/TODAY/",headline:<bigIdea.title>}
+   to window.EDITIONS in editions.js.
+6. Run: python3 poster.py TODAY
+7. node --check the inline JS of editions/TODAY/index.html.
+8. Write editions/TODAY/tweet.txt (gitignored): an X caption under 280 chars —
+   headline + one-line lead + edition URL + 2-3 hashtags. Print it.
+9. Commit all changes with message "Edition: TODAY" (real date) and push to main.
+   Print the commit hash and https://nebulatris.github.io/editions/TODAY/.

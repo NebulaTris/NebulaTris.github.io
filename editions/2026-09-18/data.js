@@ -61,6 +61,28 @@ window.BRIEF = {
     { "firm": "Peak XV Partners", "country": "India", "focus": "seed-to-growth bets across fintech and deeptech", "deal": "Discovered Materials' $9M seed" },
     { "firm": "Y Combinator", "country": "United States", "focus": "very early, high-risk, high-reward startups", "deal": "Discovered Materials' $9M seed" }
   ],
+  "chartsOfTheDay": [
+    {
+      "headline": "India minted its 132nd unicorn slower than ever before",
+      "bullets": [
+        "Only 4 new unicorns joined in 2026 so far, versus 20+ in peak years",
+        "The gap between funding rounds is stretching from ~12 months to ~20 months",
+        "More \"soonicorns\" are choosing to IPO instead of chasing the $1B private label"
+      ],
+      "chart": { "type": "line", "labels": ["2021", "2022", "2023", "2024", "2025", "2026 YTD"], "values": [44, 23, 9, 7, 5, 4], "unit": "count", "cap": "New unicorns minted per year. The unicorn factory has slowed sharply since 2021's peak." },
+      "source": "Hurun India Unicorn tracker, 2026"
+    },
+    {
+      "headline": "Indian VCs are still sitting on a mountain of unspent cash",
+      "bullets": [
+        "Funds raised in 2021-2022 still have roughly $10B of \"dry powder\" left to deploy",
+        "That's enough to fund about 18 months of current deal-making at today's pace",
+        "Pressure is building on GPs to deploy before their fund's investment window closes"
+      ],
+      "chart": { "type": "bar", "labels": ["2022", "2023", "2024", "2025", "2026"], "values": [14, 12, 11, 10.5, 10], "unit": "$B", "cap": "Estimated undeployed VC capital in India, by year. It's shrinking, but slowly." },
+      "source": "Bain India VC report, 2026"
+    }
+  ],
   "deck": {
     "summary": "Funding is up and getting pickier: fewer deals, bigger cheques, and money increasingly chasing hard tech and disciplined, profitable companies rather than growth at any cost.",
     "takeaways": [

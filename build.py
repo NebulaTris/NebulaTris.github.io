@@ -28,11 +28,16 @@ Return ONLY a JSON object (no prose, no code fences) with exactly these keys:
     "gov":      {"labels":["scheme",...], "values":[crore_number,...], "cap":"..."}
   },
   "bigIdea": {"title":"short headline","lead":"...","body":"...","why":"..."},
+  "continuity": {"status":"developing|quiet","note":"one plain sentence"},
   "trends": [ {"h":"1. ...","p":"what's happening","why":"why it matters"},
               {"h":"2. ...","p":"...","why":"..."},
               {"h":"3. ...","p":"...","why":"..."} ],
   "deals": [ {"amt":"$100M","sub":"Series C","co":"Company","sector":"sector","d":"one plain line"} ],
   "investors": [ {"firm":"VC firm name","country":"country it's based in","focus":"what they usually back","deal":"which deal this week ties to them"} ],
+  "chartsOfTheDay": [ {"headline":"punchy, tweet-style claim (not a neutral label)",
+    "bullets":["short stat line","short stat line"],
+    "chart":{"type":"bar|line|doughnut","labels":[...],"values":[...],"unit":"x|%|$M|cr|count","cap":"one plain sentence"},
+    "source":"short attribution"} ],
   "deck": {
     "summary":"2-3 plain sentences on the day, written like a consulting exec summary",
     "takeaways":["...","...","..."],
@@ -46,18 +51,64 @@ sectors can differ between windows — with values as multiples vs the same-leng
 period (baseline 1.0; e.g. quarterly values are vs last quarter, monthly vs last month).
 gov.values are in crore. Give 3 trends and 4-6 deals. Give 4-8 investors: real VC firms
 actually behind this week's deals, each one's "deal" naming which deal ties to it.
-deck.takeaways and deck.implications are each exactly 3 short bullets; deck.summary is
-2-3 plain sentences framed like a consulting exec summary of the day. Keep every word
-very simple and ELI5. Figures are approximate. Do not add or remove keys.
+Give 2-3 chartsOfTheDay: topics must be BROADER ecosystem/macro context not already
+covered by weekly/rotation/gov/deals (e.g. unicorn count over time, IPO pipeline, fund
+dry powder, city-wise funding split, seed-to-Series-A conversion, foreign vs domestic
+LP mix, women-founder share, average round size trend) — pick whichever 2-3 are
+timeliest today. Only include "continuity" when today either follows up on an earlier
+story ("developing") or is a genuinely quiet news day being framed as progress on an
+older story ("quiet") — omit the key entirely on a normal new-story day. deck.takeaways
+and deck.implications are each exactly 3 short bullets; deck.summary is 2-3 plain
+sentences framed like a consulting exec summary of the day. Keep every word very simple
+and ELI5. Figures are approximate. Do not add or remove keys.
 """
 PROMPT = ("You are writing today's 'India VC, simply' edition for a beginner. "
           "Research the most important Indian venture-capital and startup news from "
           "the last 24-72 hours with web search — including which VC firms are behind "
           "the week's headline deals — then fill in this data. " + SCHEMA)
 
-def call_claude():
+def load_recent_briefs(n=3):
+    """Read the last n editions' data.js so the prompt can avoid repeating them."""
+    folder = pathlib.Path("editions")
+    if not folder.exists():
+        return []
+    dates = sorted((d.name for d in folder.iterdir() if d.is_dir() and re.match(r"\d{4}-\d{2}-\d{2}$", d.name)),
+                    reverse=True)[:n]
+    briefs = []
+    for d in dates:
+        f = folder / d / "data.js"
+        if not f.exists():
+            continue
+        t = f.read_text(encoding="utf-8")
+        a, b = t.find("{"), t.rfind("}")
+        if a == -1 or b == -1:
+            continue
+        try:
+            briefs.append((d, json.loads(t[a:b + 1])))
+        except Exception:
+            continue
+    return briefs
+
+def freshness_note(briefs):
+    """Turn recent editions into an explicit do-not-repeat instruction for the prompt."""
+    if not briefs:
+        return ""
+    lines = []
+    for d, b in briefs:
+        title = (b.get("bigIdea") or {}).get("title", "")
+        deals = ", ".join(x.get("co", "") for x in b.get("deals", []))
+        trends = "; ".join(x.get("h", "") for x in b.get("trends", []))
+        cotd = "; ".join(x.get("headline", "") for x in b.get("chartsOfTheDay", []))
+        lines.append("- %s: bigIdea=\"%s\"; deals=[%s]; trends=[%s]; chartsOfTheDay=[%s]"
+                      % (d, title, deals, trends, cotd))
+    return ("\n\nRecent editions (do NOT repeat these — same bigIdea angle, same deals, same "
+            "trend angles, or same chartsOfTheDay topics; if a story below is still developing, "
+            "frame today's version as a follow-up with continuity.status=\"developing\" instead "
+            "of restating it):\n" + "\n".join(lines))
+
+def call_claude(prompt):
     body = {"model":"claude-sonnet-4-6","max_tokens":4000,
-            "messages":[{"role":"user","content":PROMPT}],
+            "messages":[{"role":"user","content":prompt}],
             "tools":[{"type":"web_search_20250305","name":"web_search"}]}
     req = urllib.request.Request("https://api.anthropic.com/v1/messages",
         data=json.dumps(body).encode(),
@@ -91,6 +142,17 @@ def validate(d):
     if not (3 <= len(d["sources"]) <= 8): raise ValueError("Need 3-8 sources")
     if not (3 <= len(d["investors"]) <= 10): raise ValueError("Need 3-10 investors")
     if not d["deck"].get("summary"): raise ValueError("deck needs a summary")
+    cotd = d.get("chartsOfTheDay")
+    if cotd is not None:
+        if not (1 <= len(cotd) <= 3):
+            raise ValueError("chartsOfTheDay needs 1-3 items")
+        for i, item in enumerate(cotd):
+            ch = (item or {}).get("chart") or {}
+            if len(ch.get("labels", [])) != len(ch.get("values", [])) or not ch.get("values"):
+                raise ValueError("chartsOfTheDay[%d].chart mismatch" % i)
+    continuity = d.get("continuity")
+    if continuity is not None and not continuity.get("note"):
+        raise ValueError("continuity needs a note when present")
     return True
 
 def load_editions():
@@ -108,7 +170,8 @@ def save_editions(items):
     pathlib.Path("editions.js").write_text(out, encoding="utf-8")
 
 def main():
-    data = extract_json(call_claude())
+    prompt = PROMPT + freshness_note(load_recent_briefs())
+    data = extract_json(call_claude(prompt))
     validate(data)
     today = datetime.date.today()
     date = today.isoformat()

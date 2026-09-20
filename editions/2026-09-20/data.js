@@ -41,6 +41,10 @@ window.BRIEF = {
     "body": "An anchor round is early money big institutions (insurance giants, sovereign funds, pension funds) commit right before an IPO, to show everyone else the deal is trustworthy. NSE's anchor book alone was worth more than ten weeks of typical Indian startup funding, and it came from names like LIC, Norway's giant pension fund, and Abu Dhabi's Sovereign fund. Meanwhile, fresh-money VC deals stayed small and scattered — 17 of them, mostly seed-stage.",
     "why": "when a company everyone already understands can raise 10x an entire week's startup funding in a single anchor round, it shows where the \"safe\" money goes: big, proven, about-to-list businesses. Early-stage bets still move in unpredictable bursts — a reminder that VC and public markets are very different rivers of money."
   },
+  "continuity": {
+    "status": "developing",
+    "note": "Following up on 18 September's \"the money got picky\": this week confirmed it wasn't a blip — weekly VC inflow fell further, from $291M to just $62M."
+  },
   "trends": [
     { "h": "1. Specialist AI funds are stacking up cash", "p": "Activate, founded by Haptik's former CEO, closed its first fund at $105M — purely to back AI-native startups from idea stage — 125% above its own target, backed by Vinod Khosla and General Catalyst among others.", "why": "when a fund raises money just for one sector, it means faster, more confident cheques for founders in that sector, and signals big-name investors expect that sector to keep growing." },
     { "h": "2. Celebrities are becoming real co-investors, not just faces", "p": "Flam, an AI interactive-content startup, raised $40M in Series B — this week's biggest round — with QED Investors leading, joined by actor Shah Rukh Khan alongside its existing backers.", "why": "celebrity money chasing consumer-facing AI products blends fandom with genuine bets — it can bring distribution and trust fast, but it's not the same as institutional diligence." },
@@ -61,6 +65,28 @@ window.BRIEF = {
     { "firm": "Avaana Capital", "country": "India", "focus": "climate tech and hard-tech manufacturing", "deal": "DheyaTech's ₹43 crore round" },
     { "firm": "360 ONE Asset", "country": "India", "focus": "consumer and quick-commerce bets", "deal": "Firi's $3M seed" },
     { "firm": "Arkam Ventures", "country": "India", "focus": "early-stage consumer and fintech-for-India", "deal": "UniqYou's ₹15.8 crore seed" }
+  ],
+  "chartsOfTheDay": [
+    {
+      "headline": "Four cities still eat 80% of India's startup funding",
+      "bullets": [
+        "Bengaluru, Delhi-NCR, Mumbai and Pune together took ~80% of 2026 VC dollars",
+        "Tier-2 cities like Jaipur, Indore and Kochi combined got under 5%",
+        "The gap is narrowing only in fintech and agritech, where local knowledge matters more than a metro address"
+      ],
+      "chart": { "type": "doughnut", "labels": ["Bengaluru", "Delhi-NCR", "Mumbai", "Pune", "Rest of India"], "values": [34, 24, 14, 8, 20], "unit": "%", "cap": "Share of 2026 VC dollars by city cluster. Four metros still dominate." },
+      "source": "Inc42 funding tracker, 2026"
+    },
+    {
+      "headline": "Only 1 in 10 seed-funded startups ever reaches Series A",
+      "bullets": [
+        "That conversion rate has fallen from roughly 1-in-6 a few years ago",
+        "The average gap between seed and Series A has stretched to about 20 months",
+        "Investors say the bar for \"proof it works\" has quietly gotten much higher"
+      ],
+      "chart": { "type": "bar", "labels": ["2019 cohort", "2021 cohort", "2023 cohort", "2024 cohort"], "values": [17, 14, 11, 10], "unit": "%", "cap": "Share of seed-funded startups that went on to raise a Series A, by seed year." },
+      "source": "Tracxn seed cohort analysis, 2026"
+    }
   ],
   "deck": {
     "summary": "This week the fresh-money side of Indian VC went quiet — about $62M across 17 deals, down sharply from $413M and $291M the two weeks before — even as NSE's IPO anchor round alone pulled in roughly $760M. Capital is bifurcating: mature, understood businesses raise huge sums going public, while early-stage bets stay small, scattered, and increasingly AI- or deeptech-flavoured.",
