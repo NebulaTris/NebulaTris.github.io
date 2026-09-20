@@ -20,7 +20,11 @@ Return ONLY a JSON object (no prose, no code fences) with exactly these keys:
   "stats": [ {"n":"$14.9B","l":"short label"}, {"n":"...","l":"..."}, {"n":"...","l":"..."} ],
   "charts": {
     "weekly":   {"labels":["wk1","wk2","wk3"], "values":[num,num,num], "cap":"one plain sentence"},
-    "rotation": {"labels":["Fintech","SaaS","Deeptech","Consumer / D2C"], "values":[num,...], "cap":"..."},
+    "rotation": {
+      "monthly":   {"labels":["sector",...], "values":[num,...], "cap":"one plain sentence"},
+      "quarterly": {"labels":["sector",...], "values":[num,...], "cap":"one plain sentence"},
+      "annual":    {"labels":["sector",...], "values":[num,...], "cap":"one plain sentence"}
+    },
     "gov":      {"labels":["scheme",...], "values":[crore_number,...], "cap":"..."}
   },
   "bigIdea": {"title":"short headline","lead":"...","body":"...","why":"..."},
@@ -28,15 +32,28 @@ Return ONLY a JSON object (no prose, no code fences) with exactly these keys:
               {"h":"2. ...","p":"...","why":"..."},
               {"h":"3. ...","p":"...","why":"..."} ],
   "deals": [ {"amt":"$100M","sub":"Series C","co":"Company","sector":"sector","d":"one plain line"} ],
+  "investors": [ {"firm":"VC firm name","country":"country it's based in","focus":"what they usually back","deal":"which deal this week ties to them"} ],
+  "deck": {
+    "summary":"2-3 plain sentences on the day, written like a consulting exec summary",
+    "takeaways":["...","...","..."],
+    "implications":["...","...","..."]
+  },
   "sources": [ {"t":"headline","s":"Source · why","url":"https://..."} ]  // 5 to 8 items
 }
-Rules: weekly.values are $ millions; rotation.values are multiples vs last year
-(baseline 1.0); gov.values are in crore. Give 3 trends and 4-6 deals. Keep every
-word very simple and ELI5. Figures are approximate. Do not add or remove keys.
+Rules: weekly.values are $ millions. Each of charts.rotation's three windows (monthly,
+quarterly, annual) carries the 5-8 sectors most relevant to THAT period — the sets of
+sectors can differ between windows — with values as multiples vs the same-length prior
+period (baseline 1.0; e.g. quarterly values are vs last quarter, monthly vs last month).
+gov.values are in crore. Give 3 trends and 4-6 deals. Give 4-8 investors: real VC firms
+actually behind this week's deals, each one's "deal" naming which deal ties to it.
+deck.takeaways and deck.implications are each exactly 3 short bullets; deck.summary is
+2-3 plain sentences framed like a consulting exec summary of the day. Keep every word
+very simple and ELI5. Figures are approximate. Do not add or remove keys.
 """
 PROMPT = ("You are writing today's 'India VC, simply' edition for a beginner. "
           "Research the most important Indian venture-capital and startup news from "
-          "the last 24-72 hours with web search, then fill in this data. " + SCHEMA)
+          "the last 24-72 hours with web search — including which VC firms are behind "
+          "the week's headline deals — then fill in this data. " + SCHEMA)
 
 def call_claude():
     body = {"model":"claude-sonnet-4-6","max_tokens":4000,
@@ -55,13 +72,25 @@ def extract_json(text):
     return json.loads(text[a:b+1])
 
 def validate(d):
-    for k in ("stats","charts","bigIdea","trends","deals","sources"):
+    for k in ("stats","charts","bigIdea","trends","deals","investors","deck","sources"):
         if k not in d: raise ValueError("Missing key: "+k)
-    for c in ("weekly","rotation","gov"):
-        ch=d["charts"][c]
+    charts = d["charts"]
+    for c in ("weekly","gov"):
+        ch=charts[c]
         if len(ch["labels"])!=len(ch["values"]) or not ch["values"]:
             raise ValueError("Chart "+c+" mismatch")
+    rot = charts.get("rotation") or {}
+    if "labels" in rot:  # back-compat: a flat window counts as "annual"
+        rot = {"annual": rot}
+    windows = {k: v for k, v in rot.items() if k in ("monthly","quarterly","annual")}
+    if not windows:
+        raise ValueError("charts.rotation needs at least one of monthly/quarterly/annual")
+    for name, win in windows.items():
+        if len(win.get("labels",[])) != len(win.get("values",[])) or not win.get("values"):
+            raise ValueError("Chart rotation."+name+" mismatch")
     if not (3 <= len(d["sources"]) <= 8): raise ValueError("Need 3-8 sources")
+    if not (3 <= len(d["investors"]) <= 10): raise ValueError("Need 3-10 investors")
+    if not d["deck"].get("summary"): raise ValueError("deck needs a summary")
     return True
 
 def load_editions():

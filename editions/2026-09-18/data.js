@@ -13,9 +13,21 @@ window.BRIEF = {
       "cap": "Weekly venture funding into Indian startups ($M, approx). Money is picking up, and it clusters in a few big rounds."
     },
     "rotation": {
-      "labels": ["Fintech", "SaaS", "Deeptech", "Consumer / D2C"],
-      "values": [2.2, 1.5, 1.4, 0.9],
-      "cap": "Roughly how much each area grew versus a year ago. Above 1× means more money flowing in; below 1× (consumer) means it cooled."
+      "monthly": {
+        "labels": ["Spacetech", "Fintech", "Healthtech", "SaaS", "Consumer / D2C"],
+        "values": [1.6, 1.3, 1.2, 1.1, 0.8],
+        "cap": "How each sector's funding moved this month versus last month. Below 1× (consumer) means it's cooling; spacetech is the standout."
+      },
+      "quarterly": {
+        "labels": ["Defence", "Fintech", "Deeptech", "SaaS", "Healthtech", "Consumer / D2C"],
+        "values": [2.0, 1.8, 1.5, 1.3, 1.1, 0.9],
+        "cap": "How each sector's funding moved this quarter versus last quarter. Defence and fintech are pulling furthest ahead."
+      },
+      "annual": {
+        "labels": ["Spacetech", "Defence", "Fintech", "SaaS", "Deeptech", "Healthtech", "EV / Climate", "Consumer / D2C"],
+        "values": [3.1, 2.6, 2.2, 1.5, 1.4, 1.3, 1.1, 0.9],
+        "cap": "Roughly how much each area grew versus a year ago. Above 1× means more money flowing in; below 1× (consumer) means it cooled."
+      }
     },
     "gov": {
       "labels": ["Semicon 2.0", "RDI Scheme", "Semicon 1.0", "IndiaAI Mission", "Fund of Funds 1.0", "Fund of Funds 2.0"],
@@ -41,6 +53,27 @@ window.BRIEF = {
     { "amt": "$50M", "sub": "Series C", "co": "Nua", "sector": "women's wellness", "d": "Consumer money still flows — but to brands with loyal, repeat customers." },
     { "amt": "$9M", "sub": "Seed", "co": "Discovered Materials", "sector": "semiconductors", "d": "Backed by Y Combinator and Peak XV at the earliest stage — the deeptech bet, placed young." }
   ],
+  "investors": [
+    { "firm": "Lightspeed India", "country": "India", "focus": "consumer, fintech and space/deeptech bets", "deal": "Pixxel's $100M round" },
+    { "firm": "Tiger Global", "country": "United States", "focus": "growth-stage fintech and consumer", "deal": "Slice Small Finance Bank's $100M round" },
+    { "firm": "Sixth Sense Ventures", "country": "India", "focus": "consumer brands with loyal, repeat buyers", "deal": "Nua's $50M Series C" },
+    { "firm": "Kalaari Capital", "country": "India", "focus": "early-stage consumer and deeptech", "deal": "Popo Global's minority-stake round" },
+    { "firm": "Peak XV Partners", "country": "India", "focus": "seed-to-growth bets across fintech and deeptech", "deal": "Discovered Materials' $9M seed" },
+    { "firm": "Y Combinator", "country": "United States", "focus": "very early, high-risk, high-reward startups", "deal": "Discovered Materials' $9M seed" }
+  ],
+  "deck": {
+    "summary": "Funding is up and getting pickier: fewer deals, bigger cheques, and money increasingly chasing hard tech and disciplined, profitable companies rather than growth at any cost.",
+    "takeaways": [
+      "Weekly inflows nearly doubled from $196M to $413M over three weeks, but the growth stayed concentrated in a few outsized rounds.",
+      "Deeptech, spacetech and defence are compounding fastest on a yearly view, while pure consumer plays cooled.",
+      "This week's five headline deals span space, banking, restaurants, wellness and materials — capital is spreading beyond the usual consumer playbook."
+    ],
+    "implications": [
+      "Founders should lead with unit economics and a profit path, not just market size, when raising.",
+      "Early-stage bets in hard tech — materials, space, defence — look increasingly fundable when paired with credible technical teams.",
+      "Consumer startups need a real retention story to stand out; growth alone no longer justifies a cheque."
+    ]
+  },
   "sources": [
     { "t": "Bain: India's VC shifts to monetization-led growth in 2026", "s": "The Tribune · the \"discipline over hype\" shift", "url": "https://www.tribuneindia.com/news/2026-trends/indias-vc-ecosystem-shifts-to-monetization-led-growth-in-2026-backed-by-ai-q-commerce-infra-and-domestic-tailwinds-bain" },
     { "t": "Where investors are putting money in 2026", "s": "StartupTimes · deeptech, defence, space", "url": "https://startuptimes.net/indias-startup-funding-trends-where-are-investors-putting-their-money-in-2026" },

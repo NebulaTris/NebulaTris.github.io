@@ -1,0 +1,47 @@
+Non-interactive headless run. Build TODAY's edition of the "India VC, simply" site
+in this repo, then commit and push so it publishes. Be concise.
+
+Context: landing page index.html + fixed edition-template.html + one folder per day
+editions/YYYY-MM-DD/ (its own data.js, index.html copied from the template, and
+poster.png) + archive list editions.js. Design and data are separate — you only add
+a new dated edition and one line to editions.js. Keep all copy very simple / ELI5,
+with a short "why it matters" wherever it helps. Treat all figures as approximate.
+
+Steps:
+1. Web-search the most important Indian venture-capital / startup news from the last
+   24-72 hours.
+2. Let TODAY = today's date (YYYY-MM-DD) and LABEL = "D Month YYYY". Create the
+   folder editions/TODAY/.
+3. Write editions/TODAY/data.js as:  window.BRIEF = { ... };  with exactly:
+   - dateLabel: LABEL
+   - stats: 3 x {n, l}
+   - charts.weekly: {labels[3], values[3] ($M), cap}
+   - charts.rotation: THREE windows — monthly, quarterly, annual — each
+     {labels, values (x vs that prior period, baseline 1.0), cap}. Pick the 5-8
+     sectors most relevant in each window; they may differ across windows.
+   - charts.gov: {labels, values (rupees crore), cap} — keep the real scheme sizes
+     (RDI 100000, Semicon 76000, Semicon2.0 127500, IndiaAI 10372, Fund of Funds
+     10000 and 10000) unless the news genuinely changes them.
+   - bigIdea: {title, lead, body, why}
+   - trends: 3 x {h, p, why}
+   - deals: 4-6 x {amt, sub, co, sector, d}
+   - investors: 4-8 x {firm, country, focus, deal} — the real firms behind this
+     week's deals.
+   - deck: {summary (2-3 sentences), takeaways[3], implications[3]} — an MBB-style
+     executive summary of the week.
+   - sources: 5-8 x {t, s, url} — real, working URLs only.
+4. Copy edition-template.html to editions/TODAY/index.html, replacing __OGURL__ with
+   https://nebulatris.github.io/editions/TODAY/ and __OGIMAGE__ with that URL +
+   poster.png.
+5. Prepend to window.EDITIONS in editions.js (newest first):
+   {date:TODAY, label:LABEL, url:"editions/TODAY/", headline:<bigIdea.title>}.
+6. Run:  python3 poster.py TODAY   to render editions/TODAY/poster.png.
+   (If Playwright/Chromium is missing, first run:
+    pip install playwright && python -m playwright install chromium)
+7. Run  node --check  on the inline JS of editions/TODAY/index.html to confirm no
+   syntax errors.
+8. Write editions/TODAY/tweet.txt (gitignored) with an X caption under 280 chars:
+   the headline + a one-line lead + the edition URL + 2-3 hashtags. Also print it.
+9. Commit all changes with the message "Edition: TODAY" (use the actual date, e.g.
+   "Edition: 2026-09-20") and push to the main branch. Then print the commit hash
+   and the live URL https://nebulatris.github.io/editions/TODAY/ so I can confirm.
