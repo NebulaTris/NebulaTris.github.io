@@ -30,7 +30,7 @@ Return ONLY a JSON object (no prose, no code fences) with exactly these keys:
   },
   "bigIdea": {"title":"short headline","lead":"...","body":"...","why":"..."},
   "continuity": {"status":"developing|quiet","note":"one plain sentence"},
-  "history": {"sector":"e.g. Spacetech","intro":"one sentence","eras":[{"yr":"yr range","title":"...","body":"..."}]},
+  "history": {"sector":"REQUIRED, e.g. Spacetech","intro":"one sentence","eras":[{"yr":"yr range","title":"...","body":"..."}]},
   "trends": [ {"h":"1. ...","p":"what's happening","why":"why it matters"},
               {"h":"2. ...","p":"...","why":"..."},
               {"h":"3. ...","p":"...","why":"..."} ],
@@ -59,12 +59,13 @@ dry powder, city-wise funding split, seed-to-Series-A conversion, foreign vs dom
 LP mix, women-founder share, average round size trend) — pick whichever 2-3 are
 timeliest today. Only include "continuity" when today either follows up on an earlier
 story ("developing") or is a genuinely quiet news day being framed as progress on an
-older story ("quiet") — omit the key entirely on a normal new-story day. Only include
-"history" when today's deals/bigIdea clearly center on one sector (spacetech, fintech,
-AI, defence, healthtech, semiconductors, ...) — then give 4-5 eras tracing THAT
-sector's own India history instead of the template's generic default backstory; pick
-a different sector than the last 3 editions used, and omit the key entirely on a day
-with no clear sector focus. deck.takeaways
+older story ("quiet") — omit the key entirely on a normal new-story day. "history" is
+REQUIRED every day: give 4-5 eras tracing one sector's own India history instead of
+the template's generic default backstory. Pick whichever sector today's deals/bigIdea
+most center on; if no single sector clearly dominates, use the sector of today's
+largest deal. Pick a different sector than the last 3 editions used — never omit this
+key (omitting it falls back to the same static generic timeline every time, which
+looks unchanged day to day). deck.takeaways
 and deck.implications are each exactly 3 short bullets; deck.summary is 2-3 plain
 sentences framed like a consulting exec summary of the day. Keep every word very simple
 and ELI5. Figures are approximate. Do not add or remove keys.
@@ -138,7 +139,7 @@ def extract_json(text):
     return json.loads(text[a:b+1])
 
 def validate(d):
-    for k in ("stats","charts","bigIdea","trends","deals","investors","deck","sources"):
+    for k in ("stats","charts","bigIdea","trends","deals","investors","deck","sources","history"):
         if k not in d: raise ValueError("Missing key: "+k)
     charts = d["charts"]
     for c in ("weekly","gov"):
@@ -168,15 +169,14 @@ def validate(d):
     continuity = d.get("continuity")
     if continuity is not None and not continuity.get("note"):
         raise ValueError("continuity needs a note when present")
-    history = d.get("history")
-    if history is not None:
-        eras = history.get("eras") or []
-        if not history.get("sector"):
-            raise ValueError("history needs a sector when present")
-        if not (4 <= len(eras) <= 5):
-            raise ValueError("history.eras needs 4-5 items")
-        if any(not (e.get("yr") and e.get("title") and e.get("body")) for e in eras):
-            raise ValueError("history.eras items need yr, title, and body")
+    history = d["history"]
+    eras = history.get("eras") or []
+    if not history.get("sector"):
+        raise ValueError("history needs a sector")
+    if not (4 <= len(eras) <= 5):
+        raise ValueError("history.eras needs 4-5 items")
+    if any(not (e.get("yr") and e.get("title") and e.get("body")) for e in eras):
+        raise ValueError("history.eras items need yr, title, and body")
     return True
 
 def load_editions():

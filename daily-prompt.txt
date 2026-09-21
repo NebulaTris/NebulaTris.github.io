@@ -53,15 +53,16 @@ Then build the edition:
    - charts.gov: {labels, values (rupees crore), cap} — keep real scheme sizes
      unless news changes them.
    - bigIdea: {title, lead, body, why}   (a fresh angle vs recent editions)
-   - history: {sector, intro, eras:[4-5 x {yr,title,body}]} — OPTIONAL. When today's
-     deals/bigIdea clearly center on one sector (spacetech, fintech, AI, defence,
-     healthtech, semiconductors, ...), replace the generic "how India's startup
-     scene got here" backstory with that SECTOR's own India history instead: 4-5
-     eras (yr range, short title, one ELI5 paragraph) tracing how that specific
-     sector got to today in India. Pick a DIFFERENT sector than the last 3
-     editions' history.sector (see FRESHNESS). OMIT this key entirely on a day
-     with no clear sector focus — the template falls back to the fixed general
-     timeline automatically.
+   - history: {sector, intro, eras:[4-5 x {yr,title,body}]} — REQUIRED, every day.
+     Replace the generic "how India's startup scene got here" backstory with a
+     SECTOR's own India history: 4-5 eras (yr range, short title, one ELI5
+     paragraph) tracing how that specific sector got to today in India. Pick
+     whichever sector today's deals/bigIdea most center on; if no single sector
+     clearly dominates, use the sector of today's single largest deal. Pick a
+     DIFFERENT sector than the last 3 editions' history.sector (see FRESHNESS) —
+     never omit this key, since omitting it makes the page fall back to the same
+     static generic timeline every time, which reads as "no difference" day to
+     day.
    - continuity: {status:"developing"|"quiet", note} — OMIT this key entirely on a
      genuinely new-story day; only include it per the FRESHNESS rules above.
    - trends: 3 x {h,p,why}               (not repeats of recent editions)
