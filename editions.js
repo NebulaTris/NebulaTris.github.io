@@ -1,5 +1,6 @@
 /* List of all editions, newest first. The pipeline prepends a new entry each day. */
 window.EDITIONS = [
+  { "date": "2026-09-24", "label": "24 September 2026", "url": "editions/2026-09-24/", "headline": "The hidden unicorn inside the old company" },
   { "date": "2026-09-23", "label": "23 September 2026", "url": "editions/2026-09-23/", "headline": "UPI is following the diaspora out of India" },
   { "date": "2026-09-22", "label": "22 September 2026", "url": "editions/2026-09-22/", "headline": "The stake sale became the new funding round" },
   { "date": "2026-09-21", "label": "21 September 2026", "url": "editions/2026-09-21/", "headline": "The exit door finally has a queue" },
