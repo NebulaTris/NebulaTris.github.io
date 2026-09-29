@@ -1,5 +1,6 @@
 /* List of all editions, newest first. The pipeline prepends a new entry each day. */
 window.EDITIONS = [
+  { "date": "2026-09-29", "label": "29 September 2026", "url": "editions/2026-09-29/", "headline": "The free road gets a toll booth" },
   { "date": "2026-09-28", "label": "28 September 2026", "url": "editions/2026-09-28/", "headline": "The middleman wants to own the factory" },
   { "date": "2026-09-27", "label": "27 September 2026", "url": "editions/2026-09-27/", "headline": "The campus became the VC" },
   { "date": "2026-09-26", "label": "26 September 2026", "url": "editions/2026-09-26/", "headline": "The side-door exit" },
