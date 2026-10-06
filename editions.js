@@ -1,5 +1,6 @@
 /* List of all editions, newest first. The pipeline prepends a new entry each day. */
 window.EDITIONS = [
+  { "date": "2026-10-06", "label": "6 October 2026", "url": "editions/2026-10-06/", "headline": "The old giants became the exit door" },
   { "date": "2026-10-05", "label": "5 October 2026", "url": "editions/2026-10-05/", "headline": "India learned to pay for stories" },
   { "date": "2026-10-02", "label": "2 October 2026", "url": "editions/2026-10-02/", "headline": "Payments are the bait, loans are the business" },
   { "date": "2026-10-01", "label": "1 October 2026", "url": "editions/2026-10-01/", "headline": "The missing first rung" },
